@@ -3,8 +3,10 @@
 Versión portable del horario universitario **Class BIT** para abrir desde el navegador del portátil o móvil (iPhone/Android), sin necesidad de descargar la app de escritorio.
 
 - El horario se guarda en el **localStorage** del navegador (cache del dispositivo). No requiere base de datos.
-- Al primer acceso se precargan las 7 clases actuales (editables desde el móvil).
-- Incluye la malla semanal, festivos de Colombia y temas (pixel/spider) de la app original.
+- Al primer acceso la app arranca **vacía** (sin clases precargadas): cada usuario agrega sus propias materias desde el móvil.
+- El tema por defecto es el **original** (pixel) y la elección de tema se guarda en el navegador.
+- Tamaño de interfaz **optimizado para móvil** (responsive, bottom-nav fija con safe-area).
+- Incluye la malla semanal, festivos de Colombia y temas (pixel/spider/forest/synthwave) de la app original.
 
 ## Deploy
 

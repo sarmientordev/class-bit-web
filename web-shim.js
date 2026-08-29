@@ -8,6 +8,8 @@
   const DATA_KEY = 'classbit:data';
   const SETTINGS_KEY = 'classbit:settings';
   const SEED_FLAG = 'classbit:seeded';
+  // Versión del shim: si cambia, se descartan datos previos (para arrancar limpio).
+  const SHIM_VERSION = '2';
 
   function readJSON(key) {
     try {
@@ -19,25 +21,23 @@
     try { localStorage.setItem(key, JSON.stringify(val)); } catch (_) {}
   }
 
-  // Horario inicial (solo la primera vez) — los datos de Rafael.
+  // App arranca TOTALMENTE limpia: sin clases precargadas.
+  // El usuario (o tú) agrega sus propias materias.
   const SEED = {
     version: 3,
-    classes: [
-      { id: "mt3dowwdtcba5l", name: "ECUACIONES DIFERENCIALES", teacher: "JAVIER MENDOZA BELTRAN", startTime: "19:30", endTime: "21:45", room: "C-304", days: [4], color: "#E74C3C" },
-      { id: "mt3hjx5h4hay1a", name: "VISUALIZACION DE DATOS I", teacher: "DIANA PAOLA BEETAR BARAJA", startTime: "18:45", endTime: "20:15", room: "E-403", days: [0], color: "#E74C3C" },
-      { id: "mt7y9127ao5grp", name: "ELECTIVA I", teacher: "FABIO GARCIA RAMIREZ", startTime: "20:15", endTime: "21:45", room: "E-403", days: [0], color: "#E74C3C" },
-      { id: "mt7yce9kd9m2gy", name: "DESARROLLO DE SOFTWARE II", teacher: "RONALD CARRASCAL CARREAZO", startTime: "18:45", endTime: "21:45", room: "E-104", days: [1], color: "#E74C3C" },
-      { id: "mt7yge17kt5irh", name: "BASES DE DATOS II", teacher: "JORGE LUIS CHAVARRIAGA VARGAS", startTime: "18:45", endTime: "21:45", room: "F-501", days: [2], color: "#E74C3C" },
-      { id: "mt7yht7rr6uymy", name: "INGLES III", teacher: "JEIMMY VICTORIA DEVOZ", startTime: "18:45", endTime: "20:15", room: "D-102", days: [3], color: "#E74C3C" },
-      { id: "mt7ykhh5lva9cq", name: "REDES Y COMPUTADORAS", teacher: "HEYBERTT MORENO DIAZ", startTime: "20:15", endTime: "21:45", room: "F-502", days: [3], color: "#E74C3C" }
-    ],
-    settings: { showClock: true, use24h: false, theme: "spider", soundEnabled: true, soundChoice: "retro", remind15: true, remind5: true, remindTomorrow: true, custom: {} }
+    classes: [],
+    settings: { showClock: true, use24h: false, theme: "pixel", soundEnabled: true, soundChoice: "retro", remind15: true, remind5: true, remindTomorrow: true, custom: {} }
   };
 
   function seedIfNeeded() {
-    if (!localStorage.getItem(SEED_FLAG)) {
-      if (!localStorage.getItem(DATA_KEY)) writeJSON(DATA_KEY, { version: 3, classes: SEED.classes });
-      if (!localStorage.getItem(SETTINGS_KEY)) writeJSON(SETTINGS_KEY, SEED.settings);
+    // Si antes había datos de una versión anterior, se limpian para arrancar de cero.
+    if (readJSON(DATA_KEY) && !readJSON(DATA_KEY).webClean) {
+      localStorage.removeItem(DATA_KEY);
+      localStorage.removeItem(SETTINGS_KEY);
+    }
+    if (!localStorage.getItem(SEED_FLAG) || !readJSON(DATA_KEY)) {
+      if (!readJSON(DATA_KEY)) writeJSON(DATA_KEY, { version: 3, webClean: true, classes: [] });
+      if (!readJSON(SETTINGS_KEY)) writeJSON(SETTINGS_KEY, SEED.settings);
       localStorage.setItem(SEED_FLAG, '1');
     }
   }
