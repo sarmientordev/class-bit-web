@@ -1415,4 +1415,32 @@ select.pixel-input { cursor: pointer; }
 
 ::selection { background: var(--accent-magenta); color: #fff; }
 
+/* ═══ RESPONSIVE MÓVIL ═══ */
+@media (max-width: 640px) {
+  html, body { overflow: hidden; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .app-header { padding: 12px 12px 0; }
+  .main-content { padding: 10px 12px calc(84px + env(safe-area-inset-bottom)); }
+  .day-tabs-container { padding: 14px 10px 10px; }
+  .day-tabs { gap: 5px; }
+  .day-tab { padding: 9px 2px; font-size: 7px; }
+  .current-date-bar { font-size: 17px; letter-spacing: 1px; }
+  .live-clock { font-size: 17px; }
+  .modal-box { max-height: 94dvh; }
+  .modal-body { padding: 16px; }
+  .form-row { grid-template-columns: 1fr; gap: 10px; }
+  .day-checkboxes { gap: 6px; justify-content: space-between; }
+  .day-check span { width: 100%; }
+  .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
+  .nav-item { padding: 12px 2px; }
+  .theme-item { flex-wrap: wrap; }
+  .header-actions .icon-btn { width: 34px; height: 34px; }
+}
+
+@media (max-width: 400px) {
+  .app-title { font-size: 10px; }
+  .holiday-banner { font-size: 14px; }
+  .current-date-bar { font-size: 15px; }
+  .card-body { padding: 10px 12px; }
+}
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
