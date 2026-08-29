@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class BIT — Horario Universitario</title>
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Class BIT" />
+  <link rel="apple-touch-icon" href="assets/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ░░░ ANIMATED STARS BACKGROUND ░░░ -->
+<div class="stars-container" id="stars-container"></div>
+<div class="clouds-container">
+  <div class="pixel-cloud cloud-1"></div>
+  <div class="pixel-cloud cloud-2"></div>
+  <div class="pixel-cloud cloud-3"></div>
+</div>
+<div class="moon-container">
+  <div class="pixel-moon"></div>
+  <div class="moon-glow"></div>
+</div>
+
+<!-- ░░░ MAIN APP ░░░ -->
+<div class="app-wrapper">
+
+  <!-- WINDOW BAR (zona para arrastrar la ventana) -->
+  <div class="window-bar" id="window-bar">
+    <span class="window-bar-title">CLASS BIT</span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="header-logo">
+        <h1 class="app-title"><span class="brand-class">CLASS</span><span class="title-bit">🕹️</span><span class="brand-bit">BIT</span></h1>
+        <span class="app-author">by: Rafxzz</span>
+      </div>
+      <div class="holiday-banner" id="holiday-banner" style="display:none"></div>
+      <div class="next-class-header" id="next-class-header">
+        <div class="nch-top">
+          <span class="nch-label" id="nch-label">PRÓXIMA</span>
+          <span class="nch-name" id="nch-name">—</span>
+        </div>
+        <div class="nch-bottom">
+          <span class="nch-timer" id="nch-timer">--:--:--</span>
+          <span class="nch-room" id="nch-room"></span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="live-clock" id="live-clock" style="display:none"></span>
+        <button class="pixel-btn icon-btn" id="btn-notify" title="Probar notificación" aria-label="Probar notificación">🔔</button>
+        <button class="pixel-btn icon-btn" id="btn-settings" title="Ajustes" aria-label="Ajustes">🔧</button>
+        <button class="pixel-btn icon-btn" id="btn-add" title="Agregar clase" aria-label="Agregar clase"><span>＋</span></button>
+      </div>
+    </div>
+
+    <div class="current-date-bar">
+      <span class="date-pixel" id="current-date-display"></span>
+      <span class="date-blink">▌</span>
+    </div>
+    <div class="header-spacer" aria-hidden="true"></div>
+  </header>
+
+  <!-- DAY SELECTOR TABS -->
+  <div class="day-tabs-container">
+    <div class="day-tabs" role="tablist" aria-label="Días de la semana">
+      <button class="day-tab" data-day="0" role="tab" aria-selected="false" id="tab-lun">LUN</button>
+      <button class="day-tab" data-day="1" role="tab" aria-selected="false" id="tab-mar">MAR</button>
+      <button class="day-tab" data-day="2" role="tab" aria-selected="false" id="tab-mie">MIÉ</button>
+      <button class="day-tab" data-day="3" role="tab" aria-selected="false" id="tab-jue">JUE</button>
+      <button class="day-tab" data-day="4" role="tab" aria-selected="false" id="tab-vie">VIE</button>
+      <button class="day-tab" data-day="5" role="tab" aria-selected="false" id="tab-sab">SÁB</button>
+      <button class="day-tab" data-day="6" role="tab" aria-selected="false" id="tab-dom">DOM</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" role="main">
+    <div class="status-bar">
+      <div class="status-left">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">Cargando...</span>
+        <span class="now-class-status" id="now-class-status"></span>
+      </div>
+      <div class="status-right">
+        <span class="class-count" id="class-count">0 clases</span>
+      </div>
+    </div>
+
+    <div class="week-grid" id="week-grid"></div>
+
+    <div class="schedule-list" id="schedule-list" role="list" aria-label="Lista de clases"></div>
+
+    <div class="empty-state" id="empty-state" aria-live="polite">
+      <div class="empty-pixel-art">
+        <img class="spidey-logo" src="assets/spidey-logo.png" alt="Spider-Man" draggable="false" />
+        <div class="pixel-character">
+          <div class="char-head"></div>
+          <div class="char-body"></div>
+          <div class="char-legs"></div>
+        </div>
+      </div>
+      <p class="empty-title">¡Sin clases este día!</p>
+      <p class="empty-sub">Día libre, gamer 🎮</p>
+      <button class="pixel-btn btn-primary" id="btn-add-empty">+ Agregar clase</button>
+    </div>
+
+    <!-- FESTIVOS -->
+    <div class="festivos-panel" id="festivos-panel">
+      <div class="festivos-title">🗓 PRÓXIMOS FESTIVOS EN COLOMBIA</div>
+      <div class="festivos-list" id="festivos-list"></div>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="stats-panel" id="stats-panel">
+      <div class="stats-title">📊 ESTADÍSTICAS DE TU HORARIO</div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="stats-days" id="stats-days"></div>
+    </div>
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" role="navigation" aria-label="Navegación principal">
+    <button class="nav-item" data-view="week" aria-label="Semana" id="nav-week">
+      <span class="nav-icon">🗓</span><span class="nav-label">SEMANA</span>
+    </button>
+    <button class="nav-item active" data-view="schedule" aria-label="Horario" id="nav-schedule">
+      <span class="nav-icon">📅</span><span class="nav-label">HORARIO</span>
+    </button>
+    <button class="nav-item" data-view="festivos" aria-label="Festivos" id="nav-festivos">
+      <span class="nav-icon">🎉</span><span class="nav-label">FESTIVOS</span>
+    </button>
+    <button class="nav-item" data-view="stats" aria-label="Estadísticas" id="nav-stats">
+      <span class="nav-icon">📊</span><span class="nav-label">STATS</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ░░░ MODAL: ADD / EDIT CLASS ░░░ -->
+<div class="modal-overlay" id="modal-overlay" aria-modal="true" role="dialog" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">+ NUEVA CLASE</h2>
+      <button class="pixel-btn icon-btn modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="pixel-label" for="input-name">MATERIA</label>
+        <input class="pixel-input" type="text" id="input-name" placeholder="Ej: Cálculo III" maxlength="40" />
+      </div>
+      <div class="form-group">
+        <label class="pixel-label" for="input-teacher">PROFESOR</label>
+        <input class="pixel-input" type="text" id="input-teacher" placeholder="Ej: Dr. García" maxlength="40" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="pixel-label" for="input-start">HORA DE INICIO</label>
+          <select class="pixel-input" id="input-start"></select>
+        </div>
+        <div class="form-group">
+          <label class="pixel-label" for="input-end">HORA DE FIN</label>
+          <select class="pixel-input" id="input-end"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label" for="input-room">SALÓN</label>
+        <input class="pixel-input" type="text" id="input-room" placeholder="Ej: A-204" maxlength="20" />
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">DÍAS A LA SEMANA</label>
+        <div class="day-checkboxes">
+          <label class="day-check"><input type="checkbox" value="0" /><span>LUN</span></label>
+          <label class="day-check"><input type="checkbox" value="1" /><span>MAR</span></label>
+          <label class="day-check"><input type="checkbox" value="2" /><span>MIÉ</span></label>
+          <label class="day-check"><input type="checkbox" value="3" /><span>JUE</span></label>
+          <label class="day-check"><input type="checkbox" value="4" /><span>VIE</span></label>
+          <label class="day-check"><input type="checkbox" value="5" /><span>SÁB</span></label>
+          <label class="day-check"><input type="checkbox" value="6" /><span>DOM</span></label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">COLOR</label>
+        <div class="color-picker" id="color-picker"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="pixel-btn btn-secondary" id="btn-delete-class" style="display:none">BORRAR</button>
+      <button class="pixel-btn btn-primary" id="btn-save-class">GUARDAR ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ SETTINGS OVERLAY ░░░ -->
+<div class="modal-overlay" id="settings-overlay" aria-modal="true" role="dialog" aria-labelledby="settings-title">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="settings-title">🔧 AJUSTES</h2>
+      <button class="pixel-btn icon-btn modal-close" id="settings-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="pixel-label">RELOJ EN TIEMPO REAL</label>
+        <div class="toggle-row">
+          <span class="toggle-desc">Mostrar la hora actual en la parte superior</span>
+          <button class="toggle-btn" id="toggle-clock" role="switch" aria-checked="false"></button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">FORMATO DE HORA</label>
+        <div class="toggle-row">
+          <span class="toggle-desc">Horario militar (24h)</span>
+          <button class="toggle-btn" id="toggle-24h" role="switch" aria-checked="false"></button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">SONIDO DE NOTIFICACIÓN</label>
+        <div class="toggle-row">
+          <span class="toggle-desc">Suena incluso si Windows bloquea la notificación (ideal jugando 🎮)</span>
+          <button class="toggle-btn" id="toggle-sound" role="switch" aria-checked="false"></button>
+        </div>
+        <select class="pixel-input" id="select-sound" style="margin-top:8px">
+          <option value="retro">RETRO PIXEL 🔔</option>
+          <option value="beep">BEEP CLÁSICO 🖥</option>
+          <option value="coin">MONEDA 8-BIT 🪙</option>
+          <option value="alert">ALERTA DOBLE ⚠</option>
+          <option value="bell">CAMPANA SUAVE 🎐</option>
+          <option value="victory">VICTORIA 🏆</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">RECORDATORIOS CERCANOS</label>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar 15 minutos antes de la clase</span>
+          <button class="toggle-btn" id="toggle-remind15" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar 5 minutos antes de la clase</span>
+          <button class="toggle-btn" id="toggle-remind5" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar cada día las clases de mañana (20:00)</span>
+          <button class="toggle-btn" id="toggle-remind-tomorrow" role="switch" aria-checked="false"></button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="pixel-label">TEMA</label>
+        <select class="pixel-input" id="select-theme">
+          <option value="pixel">PIXEL</option>
+          <option value="dark">OSCURO</option>
+          <option value="light">CLARO</option>
+          <option value="forest">CYBER FOREST</option>
+          <option value="synthwave">SYNTHWAVE CITY</option>
+          <option value="spider">SPIDER-VERSE 🕷</option>
+        </select>
+        <button class="pixel-btn btn-secondary" id="btn-edit-theme">✎ EDITAR TEMA</button>
+      </div>
+      <p class="settings-note">El formato de hora se aplica al reloj, al crear una clase y a todas las vistas.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="pixel-btn btn-primary" id="btn-settings-done">LISTO ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ CONFIRM THEME CHANGE OVERLAY ░░░ -->
+<div class="modal-overlay" id="theme-confirm-overlay" aria-modal="true" role="dialog" aria-labelledby="theme-confirm-title">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="theme-confirm-title">🎨 CAMBIAR TEMA</h2>
+      <button class="pixel-btn icon-btn modal-close" id="theme-confirm-cancel-x" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="theme-confirm-text" id="theme-confirm-text"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="pixel-btn btn-secondary" id="theme-confirm-keep">← CONSERVAR MIS COLORES</button>
+      <button class="pixel-btn btn-primary" id="theme-confirm-apply">USAR TEMA ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ CUSTOM THEME EDITOR OVERLAY ░░░ -->
+<div class="modal-overlay" id="theme-editor-overlay" aria-modal="true" role="dialog" aria-labelledby="theme-editor-title">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="theme-editor-title">🎨 EDITAR TEMA</h2>
+      <button class="pixel-btn icon-btn modal-close" id="theme-editor-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="theme-editor-list"></div>
+      <p class="settings-note">Pasa el cursor sobre el cuadrito de color para ver qué cambia. Usa "EDITAR" para elegir entre 5 variaciones.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="pixel-btn btn-secondary" id="btn-theme-reset">RESTABLECER</button>
+      <button class="pixel-btn btn-primary" id="btn-theme-editor-done">LISTO ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ░░░ TOAST NOTIFICATION ░░░ -->
+<div class="pixel-toast" id="pixel-toast" role="alert" aria-live="assertive"></div>
+
+<script src="holidays.js"></script>
+<script src="web-shim.js"></script>
+<script src="renderer.js"></script>
+</body>
+</html>
