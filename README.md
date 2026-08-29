@@ -1,6 +1,6 @@
-# Class BIT — Versión Web (móvil)
+# Class BIT — Versión Web 
 
-Versión portable del horario universitario **Class BIT** para abrir desde el navegador del móvil (iPhone/Android), sin necesidad de descargar la app de escritorio.
+Versión portable del horario universitario **Class BIT** para abrir desde el navegador del portátil o móvil (iPhone/Android), sin necesidad de descargar la app de escritorio.
 
 - El horario se guarda en el **localStorage** del navegador (cache del dispositivo). No requiere base de datos.
 - Al primer acceso se precargan las 7 clases actuales (editables desde el móvil).
