@@ -1184,6 +1184,17 @@ function bindEvents() {
     });
   });
 
+  // MENÚ DE ACCIONES (⋮)
+  const menuBtn = document.getElementById('btn-menu');
+  const actionMenu = document.getElementById('action-menu');
+  const closeMenu = () => { if (actionMenu) actionMenu.classList.remove('open'); };
+  const toggleMenu = (e) => { e.stopPropagation(); if (actionMenu) actionMenu.classList.toggle('open'); };
+  if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+  if (actionMenu) actionMenu.addEventListener('click', (e) => { e.stopPropagation(); });
+  document.addEventListener('click', closeMenu);
+  const menuItems = actionMenu ? Array.from(actionMenu.querySelectorAll('.action-item')) : [];
+  menuItems.forEach((it) => it.addEventListener('click', closeMenu));
+
   document.getElementById('btn-add').addEventListener('click', openAddModal);
   document.getElementById('btn-add-empty').addEventListener('click', openAddModal);
 

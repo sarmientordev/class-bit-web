@@ -44,21 +44,25 @@
         <span class="app-author">by: Rafxzz</span>
       </div>
       <div class="holiday-banner" id="holiday-banner" style="display:none"></div>
-      <div class="next-class-header" id="next-class-header">
-        <div class="nch-top">
-          <span class="nch-label" id="nch-label">PRÓXIMA</span>
-          <span class="nch-name" id="nch-name">—</span>
-        </div>
-        <div class="nch-bottom">
-          <span class="nch-timer" id="nch-timer">--:--:--</span>
-          <span class="nch-room" id="nch-room"></span>
-        </div>
-      </div>
       <div class="header-actions">
         <span class="live-clock" id="live-clock" style="display:none"></span>
-        <button class="pixel-btn icon-btn" id="btn-notify" title="Probar notificación" aria-label="Probar notificación">🔔</button>
-        <button class="pixel-btn icon-btn" id="btn-settings" title="Ajustes" aria-label="Ajustes">🔧</button>
-        <button class="pixel-btn icon-btn" id="btn-add" title="Agregar clase" aria-label="Agregar clase"><span>＋</span></button>
+        <div class="menu-wrap" id="menu-wrap">
+          <button class="pixel-btn icon-btn" id="btn-menu" title="Opciones" aria-label="Opciones">☰</button>
+          <div class="action-menu" id="action-menu">
+            <button class="pixel-btn action-item" id="btn-add"><span class="action-ico">＋</span>Agregar clase</button>
+            <button class="pixel-btn action-item" id="btn-notify"><span class="action-ico">🔔</span>Probar notificación</button>
+            <button class="pixel-btn action-item" id="btn-settings"><span class="action-ico">🔧</span>Ajustes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="next-class-row">
+      <div class="next-class-header" id="next-class-header">
+        <span class="nch-label" id="nch-label">PRÓXIMA</span>
+        <span class="nch-name" id="nch-name">—</span>
+        <span class="nch-timer" id="nch-timer">--:--:--</span>
+        <span class="nch-room" id="nch-room"></span>
       </div>
     </div>
 
