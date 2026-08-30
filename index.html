@@ -44,25 +44,42 @@
         <span class="app-author">by: Rafxzz</span>
       </div>
       <div class="holiday-banner" id="holiday-banner" style="display:none"></div>
+      <!-- VARIANTE PC: cartel próxima clase (2 filas, como estaba) -->
+      <div class="next-class-header pc-next-class" id="next-class-header">
+        <div class="nch-top">
+          <span class="nch-label" id="nch-label">PRÓXIMA</span>
+          <span class="nch-name" id="nch-name">—</span>
+        </div>
+        <div class="nch-bottom">
+          <span class="nch-timer" id="nch-timer">--:--:--</span>
+          <span class="nch-room" id="nch-room"></span>
+        </div>
+      </div>
       <div class="header-actions">
         <span class="live-clock" id="live-clock" style="display:none"></span>
-        <div class="menu-wrap" id="menu-wrap">
+        <!-- VARIANTE PC: 3 botones (como estaba) -->
+        <button class="pixel-btn icon-btn pc-only" id="btn-notify" title="Probar notificación" aria-label="Probar notificación">🔔</button>
+        <button class="pixel-btn icon-btn pc-only" id="btn-settings" title="Ajustes" aria-label="Ajustes">🔧</button>
+        <button class="pixel-btn icon-btn pc-only" id="btn-add" title="Agregar clase" aria-label="Agregar clase"><span>＋</span></button>
+        <!-- VARIANTE MOBILE: menú ☰ -->
+        <div class="menu-wrap mobile-only" id="menu-wrap">
           <button class="pixel-btn icon-btn" id="btn-menu" title="Opciones" aria-label="Opciones">☰</button>
           <div class="action-menu" id="action-menu">
-            <button class="pixel-btn action-item" id="btn-add"><span class="action-ico">＋</span>Agregar clase</button>
-            <button class="pixel-btn action-item" id="btn-notify"><span class="action-ico">🔔</span>Probar notificación</button>
-            <button class="pixel-btn action-item" id="btn-settings"><span class="action-ico">🔧</span>Ajustes</button>
+            <button class="pixel-btn action-item" id="btn-add-m"><span class="action-ico">＋</span>Agregar clase</button>
+            <button class="pixel-btn action-item" id="btn-notify-m"><span class="action-ico">🔔</span>Probar notificación</button>
+            <button class="pixel-btn action-item" id="btn-settings-m"><span class="action-ico">🔧</span>Ajustes</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="next-class-row">
-      <div class="next-class-header" id="next-class-header">
-        <span class="nch-label" id="nch-label">PRÓXIMA</span>
-        <span class="nch-name" id="nch-name">—</span>
-        <span class="nch-timer" id="nch-timer">--:--:--</span>
-        <span class="nch-room" id="nch-room"></span>
+    <!-- VARIANTE MOBILE: cartel compacto en fila propia -->
+    <div class="next-class-row mobile-only">
+      <div class="next-class-header-m" id="next-class-header-m">
+        <span class="nch-label" id="nch-label-m">PRÓXIMA</span>
+        <span class="nch-name" id="nch-name-m">—</span>
+        <span class="nch-timer" id="nch-timer-m">--:--:--</span>
+        <span class="nch-room" id="nch-room-m"></span>
       </div>
     </div>
 
