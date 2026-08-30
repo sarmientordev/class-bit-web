@@ -696,7 +696,8 @@ html[data-theme="spider"] .status-bar { border-color: #2a5a8c; }
 html[data-theme="spider"] .status-text { text-shadow: 0 0 6px rgba(0,230,118,0.6); }
 
 /* Widgets spider: caja navy, timer rojo araña, badge amarillo */
-html[data-theme="spider"] .next-class-header {
+html[data-theme="spider"] .next-class-header,
+html[data-theme="spider"] .next-class-header-m {
   background: #0d2137;
   border-color: #2a5a8c;
   box-shadow: 3px 3px 0 0 #cc0000;
@@ -1079,9 +1080,44 @@ body {
 .status-text { color: var(--accent-cyan); letter-spacing: 1px; }
 .class-count { color: var(--accent-pink); font-size: 16px; }
 
-/* ═══ WIDGET PRÓXIMA CLASE (HEADER — fila propia, no invasivo) ═══ */
+/* ═══ CONTROLES POR VISTA (PC vs MOBILE) ═══ */
+/* Por defecto (PC / ancho >640px): se muestran los botones originales y el cartel de 2 filas.
+   La variante mobile (menú ☰ + cartel compacto) queda oculta. */
+.mobile-only { display: none !important; }
+.pc-only { display: flex; }
+
+/* ═══ WIDGET PRÓXIMA CLASE — VARIANTE PC (2 filas, como estaba) ═══ */
+.pc-next-class {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-vt); font-size: 17px;
+  background: var(--bg-panel);
+  border: var(--px) solid var(--border-pixel);
+  padding: 6px 16px;
+  box-shadow: var(--px) var(--px) 0 0 rgba(0,0,0,0.4), inset -2px -2px 0 0 rgba(0,0,0,0.3);
+  color: var(--text-secondary);
+  margin: 0 auto;
+}
+.pc-next-class.show { display: flex; }
+.pc-next-class .nch-top { display: flex; align-items: baseline; gap: 8px; }
+.pc-next-class .nch-bottom { display: flex; align-items: center; gap: 8px; justify-content: center; }
+.pc-next-class .nch-label { color: var(--accent-cyan); letter-spacing: 1px; font-size: 15px; }
+.pc-next-class .nch-name { color: var(--text-primary); font-weight: bold; font-size: 18px; max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc-next-class .nch-timer {
+  font-family: var(--font-pixel); font-size: 12px;
+  color: var(--accent-cyan); text-shadow: 0 0 8px var(--accent-cyan);
+  padding: 3px 8px; background: rgba(0,0,0,0.3);
+  border: var(--px) solid var(--border-pixel);
+  min-width: 72px; text-align: center;
+  animation: timerGlow 2s ease-in-out infinite;
+}
+.pc-next-class .nch-room { color: var(--accent-yellow); }
+
+/* ═══ VARIANTE MOBILE: cartel compacto + menú ☰ (solo ≤640px) ═══ */
 .next-class-row { width: 100%; flex-shrink: 0; }
-.next-class-header {
+.next-class-header-m {
   display: none;
   flex-direction: row;
   align-items: center;
@@ -1096,10 +1132,10 @@ body {
   color: var(--text-secondary);
   margin: 0 4px 8px;
 }
-.next-class-header.show { display: flex; }
-.nch-label { color: var(--accent-cyan); letter-spacing: 1px; font-size: 14px; }
-.nch-name { color: var(--text-primary); font-weight: bold; font-size: 15px; max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.nch-timer {
+.next-class-header-m.show { display: flex; }
+.next-class-header-m .nch-label { color: var(--accent-cyan); letter-spacing: 1px; font-size: 14px; }
+.next-class-header-m .nch-name { color: var(--text-primary); font-weight: bold; font-size: 15px; max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.next-class-header-m .nch-timer {
   font-family: var(--font-pixel); font-size: 10px;
   color: var(--accent-cyan); text-shadow: 0 0 8px var(--accent-cyan);
   padding: 2px 7px; background: rgba(0,0,0,0.3);
@@ -1107,10 +1143,11 @@ body {
   min-width: 62px; text-align: center;
   animation: timerGlow 2s ease-in-out infinite;
 }
-@keyframes timerGlow { 0%,100%{opacity:1;} 50%{opacity:.55;} }
-.nch-room { color: var(--accent-yellow); font-size: 14px; }
+.next-class-header-m .nch-room { color: var(--accent-yellow); font-size: 14px; }
 
-/* ═══ MENÚ DE ACCIONES (⋮) ═══ */
+@keyframes timerGlow { 0%,100%{opacity:1;} 50%{opacity:.55;} }
+
+/* ═══ MENÚ DE ACCIONES (☰) — variante mobile ═══ */
 .menu-wrap { position: relative; }
 .action-menu {
   display: none;
@@ -1461,6 +1498,11 @@ select.pixel-input { cursor: pointer; }
   .nav-item { padding: 12px 2px; }
   .theme-item { flex-wrap: wrap; }
   .header-actions .icon-btn { width: 34px; height: 34px; }
+
+  /* Alternar vista: en móvil se oculta la variante PC y se muestra la mobile */
+  .pc-only { display: none !important; }
+  .pc-next-class { display: none !important; }
+  .mobile-only { display: flex !important; }
 }
 
 @media (max-width: 400px) {

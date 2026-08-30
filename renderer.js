@@ -1054,9 +1054,8 @@ function nextUpcomingClass() {
 }
 
 function updateNextClassWidget() {
-  const header = document.getElementById('next-class-header');
   const ncs = document.getElementById('now-class-status');
-  if (!header || !ncs) return;
+  if (!ncs) return;
 
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -1096,29 +1095,33 @@ function updateNextClassWidget() {
     ncs.classList.remove('show');
   }
 
-  // Header: cuenta regresiva a la próxima clase de la semana
+  // Header: cuenta regresiva a la próxima clase de la semana (PC y variante mobile)
   const upcoming = nextUpcomingClass();
-  if (upcoming && !cur) {
-    const { cls, offset, dow } = upcoming;
-    const totalMin = offset * 1440 + (minutesOf(cls.startTime) - nowMin);
-    const secs = totalMin * 60 - now.getSeconds();
-    const label = document.getElementById('nch-label');
-    if (label) {
-      label.textContent = offset === 0 ? 'PRÓXIMA' : offset === 1 ? 'MAÑANA' : DAY_SHORT[dow];
+  const applyNext = (suffix) => {
+    const h = document.getElementById('next-class-header' + suffix);
+    const labelEl = document.getElementById('nch-label' + suffix);
+    if (!h || !labelEl) return;
+    if (upcoming && !cur) {
+      const { cls, offset, dow } = upcoming;
+      const totalMin = offset * 1440 + (minutesOf(cls.startTime) - nowMin);
+      const secs = totalMin * 60 - now.getSeconds();
+      labelEl.textContent = offset === 0 ? 'PRÓXIMA' : offset === 1 ? 'MAÑANA' : DAY_SHORT[dow];
+      document.getElementById('nch-name' + suffix).textContent = cls.name;
+      const timerEl = document.getElementById('nch-timer' + suffix);
+      timerEl.textContent = fmtCountdown(secs);
+      // Color progresivo del contador según las horas que faltan (verde → rojo)
+      const hoursLeft = (offset * 24) + ((minutesOf(cls.startTime) - nowMin) / 60);
+      const ccolor = countdownColor(hoursLeft);
+      timerEl.style.color = ccolor;
+      timerEl.style.textShadow = `0 0 8px ${ccolor}`;
+      document.getElementById('nch-room' + suffix).textContent = cls.room ? `📍 ${cls.room}` : '';
+      h.classList.add('show');
+    } else if (cur) {
+      h.classList.remove('show');
     }
-    document.getElementById('nch-name').textContent = cls.name;
-    const timerEl = document.getElementById('nch-timer');
-    timerEl.textContent = fmtCountdown(secs);
-    // Color progresivo del contador según las horas que faltan (verde → rojo)
-    const hoursLeft = (offset * 24) + ((minutesOf(cls.startTime) - nowMin) / 60);
-    const ccolor = countdownColor(hoursLeft);
-    timerEl.style.color = ccolor;
-    timerEl.style.textShadow = `0 0 8px ${ccolor}`;
-    document.getElementById('nch-room').textContent = cls.room ? `📍 ${cls.room}` : '';
-    header.classList.add('show');
-  } else if (cur) {
-    header.classList.remove('show');
-  }
+  };
+  applyNext('');      // variante PC
+  applyNext('-m');    // variante mobile
 }
 
 // ── STARS ────────────────────────────────────────
@@ -1196,13 +1199,17 @@ function bindEvents() {
   menuItems.forEach((it) => it.addEventListener('click', closeMenu));
 
   document.getElementById('btn-add').addEventListener('click', openAddModal);
+  document.getElementById('btn-add-m') && document.getElementById('btn-add-m').addEventListener('click', openAddModal);
   document.getElementById('btn-add-empty').addEventListener('click', openAddModal);
 
-  document.getElementById('btn-notify').addEventListener('click', () => {
+  const testNotif = () => {
     if (window.scheduleAPI) window.scheduleAPI.testNotification();
-  });
+  };
+  document.getElementById('btn-notify').addEventListener('click', testNotif);
+  document.getElementById('btn-notify-m') && document.getElementById('btn-notify-m').addEventListener('click', testNotif);
 
   document.getElementById('btn-settings').addEventListener('click', openSettings);
+  document.getElementById('btn-settings-m') && document.getElementById('btn-settings-m').addEventListener('click', openSettings);
   document.getElementById('settings-close').addEventListener('click', closeSettings);
   document.getElementById('btn-settings-done').addEventListener('click', closeSettings);
   document.getElementById('settings-overlay').addEventListener('click', (e) => {
