@@ -330,39 +330,51 @@
 
 <!-- ░░░ CUADERNO DE RECORDATORIOS OVERLAY ░░░ -->
 <div class="modal-overlay" id="reminders-overlay" aria-modal="true" role="dialog" aria-labelledby="reminders-title">
-  <div class="modal-box">
+  <div class="modal-box modal-reminders">
     <div class="modal-header">
       <h2 class="modal-title" id="reminders-title">📓 CUADERNO DE RECORDATORIOS</h2>
       <button class="pixel-btn icon-btn modal-close" id="reminders-close" aria-label="Cerrar">✕</button>
     </div>
     <div class="modal-body">
-      <div class="reminder-form">
-        <div class="form-group">
-          <label class="pixel-label" for="reminder-text">NUEVO PENDIENTE</label>
-          <input class="pixel-input" type="text" id="reminder-text" placeholder="Ej: entrega trabajo de Cálculo" maxlength="120" />
+      <!-- VISTA LIBRO / CUADERNO -->
+      <div class="reminder-book" id="reminder-book">
+        <div class="reminder-book-head">
+          <span class="reminder-book-title">📖 MIS ACTIVIDADES</span>
+          <button class="pixel-btn btn-primary" id="btn-reminders-add">➕ AGREGAR ACTIVIDAD</button>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="pixel-label" for="reminder-type">TIPO</label>
-            <select class="pixel-input" id="reminder-type">
-              <option value="tarea">📚 TAREA</option>
-              <option value="trabajo">📄 TRABAJO</option>
-              <option value="examen">📝 EXAMEN</option>
-              <option value="pendiente">⏳ PENDIENTE</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="pixel-label" for="reminder-date">FECHA</label>
-            <input class="pixel-input" type="date" id="reminder-date" />
-          </div>
-        </div>
-        <button class="pixel-btn btn-primary" id="btn-add-reminder">+ AGREGAR ▶</button>
+        <div class="reminders-list" id="reminders-list"></div>
+        <p class="reminders-empty" id="reminders-empty">Tu cuaderno está vacío 📓<br><span>Pulsa "Agregar actividad" para empezar</span></p>
       </div>
-      <div class="reminder-divider"></div>
-      <div class="reminders-list" id="reminders-list"></div>
-      <p class="reminders-empty" id="reminders-empty">No tienes pendientes 📓</p>
+      <!-- FORMULARIO PARA AGREGAR -->
+      <div class="reminder-form-panel" id="reminder-form-panel">
+        <div class="reminder-form">
+          <div class="form-group">
+            <label class="pixel-label" for="reminder-text">¿QUÉ TIENES QUE HACER?</label>
+            <input class="pixel-input" type="text" id="reminder-text" placeholder="Ej: entrega trabajo de Cálculo" maxlength="120" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="pixel-label" for="reminder-type">TIPO</label>
+              <select class="pixel-input" id="reminder-type">
+                <option value="tarea">📚 TAREA</option>
+                <option value="trabajo">📄 TRABAJO</option>
+                <option value="examen">📝 EXAMEN</option>
+                <option value="pendiente">⏳ PENDIENTE</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="pixel-label" for="reminder-date">FECHA</label>
+              <input class="pixel-input" type="date" id="reminder-date" />
+            </div>
+          </div>
+          <div class="reminder-form-actions">
+            <button class="pixel-btn btn-secondary" id="btn-reminders-cancel">← CANCELAR</button>
+            <button class="pixel-btn btn-primary" id="btn-add-reminder">AGREGAR ▶</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" id="reminders-footer">
       <button class="pixel-btn btn-secondary" id="btn-reminders-clear">LIMPIAR HECHOS</button>
       <button class="pixel-btn btn-primary" id="btn-reminders-done">LISTO ▶</button>
     </div>
