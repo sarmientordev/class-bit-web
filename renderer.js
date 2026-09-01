@@ -18,10 +18,11 @@ const PALETTE = [
 
 let state = {
   classes: [],
+  reminders: [],
   selectedDay: -1, // 0-6
   selectedColor: PALETTE[0],
   editingId: null,
-  currentView: 'schedule', // schedule | week | festivos
+  currentView: 'schedule', // schedule | week | festivos | stats
   settings: { showClock: true, use24h: false, soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true },
 };
 
@@ -588,6 +589,7 @@ function loadData() {
   if (!loadPromise) {
     loadPromise = window.scheduleAPI.loadData().then(data => {
       if (data && Array.isArray(data.classes)) state.classes = data.classes;
+      if (data && Array.isArray(data.reminders)) state.reminders = data.reminders;
       applySeedIfEmpty();
     });
   }
@@ -910,8 +912,91 @@ function applySeedIfEmpty() {
 
 function persist() {
   if (window.scheduleAPI) {
-    window.scheduleAPI.saveData(state.classes);
+    window.scheduleAPI.saveData({ classes: state.classes, reminders: state.reminders });
   }
+}
+
+// ── CUADERNO DE RECORDATORIOS ────────────────────
+const REM_TYPE = { tarea: '📚', trabajo: '📄', examen: '📝', pendiente: '⏳' };
+
+function openReminders() {
+  renderReminders();
+  const ov = document.getElementById('reminders-overlay');
+  if (ov) ov.classList.add('open');
+  const t = document.getElementById('reminder-text');
+  if (t) setTimeout(() => t.focus(), 50);
+}
+
+function closeReminders() {
+  const ov = document.getElementById('reminders-overlay');
+  if (ov) ov.classList.remove('open');
+}
+
+function sortReminders(list) {
+  return [...list].sort((a, b) => {
+    const d = (a.date || '9999').localeCompare(b.date || '9999');
+    return d !== 0 ? d : (a.created || 0) - (b.created || 0);
+  });
+}
+
+function formatReminderDate(dateStr) {
+  if (!dateStr) return 'Sin fecha';
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+}
+
+function renderReminders() {
+  const list = document.getElementById('reminders-list');
+  const empty = document.getElementById('reminders-empty');
+  if (!list) return;
+  const sorted = sortReminders(state.reminders);
+  list.innerHTML = sorted.map(r => {
+    const done = r.done ? ' is-done' : '';
+    const type = REM_TYPE[r.type] || '📌';
+    return `
+      <article class="reminder-item${done}" data-id="${esc(r.id)}">
+        <button class="reminder-done" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
+        <div class="reminder-main">
+          <div class="reminder-text">${type} ${esc(r.text)}</div>
+          <div class="reminder-meta">🗓 ${esc(formatReminderDate(r.date))}</div>
+        </div>
+        <button class="reminder-del" data-id="${esc(r.id)}" title="Eliminar" aria-label="Eliminar">✕</button>
+      </article>`;
+  }).join('');
+  if (empty) empty.style.display = state.reminders.length ? 'none' : 'block';
+}
+
+function addReminder() {
+  const textEl = document.getElementById('reminder-text');
+  const text = (textEl.value || '').trim();
+  if (!text) { showToast('✏️ Escribe un pendiente'); textEl.focus(); return; }
+  const type = document.getElementById('reminder-type').value;
+  const date = document.getElementById('reminder-date').value;
+  state.reminders.push({ id: uid(), text, type, date, done: false, created: Date.now() });
+  persist();
+  textEl.value = '';
+  showToast('📓 Recordatorio guardado');
+  renderReminders();
+  textEl.focus();
+}
+
+function toggleReminder(id) {
+  const r = state.reminders.find(x => x.id === id);
+  if (r) { r.done = !r.done; persist(); renderReminders(); }
+}
+
+function deleteReminder(id) {
+  state.reminders = state.reminders.filter(x => x.id !== id);
+  persist();
+  showToast('🗑 Recordatorio eliminado');
+  renderReminders();
+}
+
+function clearDoneReminders() {
+  const before = state.reminders.length;
+  state.reminders = state.reminders.filter(x => !x.done);
+  if (state.reminders.length !== before) { persist(); showToast('✓ Pendientes hechos limpios'); }
+  renderReminders();
 }
 
 // ── TOAST ────────────────────────────────────────
@@ -1216,6 +1301,27 @@ function bindEvents() {
     if (e.target === document.getElementById('settings-overlay')) closeSettings();
   });
 
+  // CUADERNO DE RECORDATORIOS
+  document.getElementById('btn-reminders') && document.getElementById('btn-reminders').addEventListener('click', openReminders);
+  document.getElementById('btn-reminders-m') && document.getElementById('btn-reminders-m').addEventListener('click', openReminders);
+  document.getElementById('reminders-close') && document.getElementById('reminders-close').addEventListener('click', closeReminders);
+  document.getElementById('btn-reminders-done') && document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
+  document.getElementById('btn-add-reminder') && document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
+  document.getElementById('btn-reminders-clear') && document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
+  document.getElementById('reminders-overlay') && document.getElementById('reminders-overlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('reminders-overlay')) closeReminders();
+  });
+  document.getElementById('reminders-list') && document.getElementById('reminders-list').addEventListener('click', (e) => {
+    const doneBtn = e.target.closest('.reminder-done');
+    if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
+    const delBtn = e.target.closest('.reminder-del');
+    if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
+  });
+  document.getElementById('reminder-text') && document.getElementById('reminder-text').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addReminder();
+  });
+
+
   document.getElementById('toggle-clock').addEventListener('click', () => {
     state.settings.showClock = !state.settings.showClock;
     saveSettings();
@@ -1342,6 +1448,7 @@ function bindEvents() {
       closeSettings();
       closeThemeEditor();
       closeThemeConfirm();
+      closeReminders();
     }
     if (e.key === 'Enter' && document.getElementById('modal-overlay').classList.contains('open')) saveClass();
   });

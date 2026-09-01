@@ -1473,6 +1473,22 @@ select.pixel-input { cursor: pointer; }
 .color-swatch:hover, .color-swatch.selected { border-color: #fff; transform: scale(1.15); box-shadow: 0 0 12px currentColor; }
 .color-swatch.selected::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; text-shadow:1px 1px 0 rgba(0,0,0,0.8); font-weight:bold; }
 
+/* ═══ CUADERNO DE RECORDATORIOS ═══ */
+.reminder-form { display: flex; flex-direction: column; gap: 12px; }
+.reminder-divider { border-top: var(--px) dashed var(--border-pixel); margin: 2px 0; }
+.reminders-list { display: flex; flex-direction: column; gap: 8px; max-height: 42vh; overflow-y: auto; }
+.reminders-empty { font-family: var(--font-pixel); font-size: 8px; color: var(--text-dim); text-align: center; padding: 18px 0; }
+.reminder-item { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: var(--px) solid var(--border-pixel); padding: 10px 12px; box-shadow: 2px 2px 0 0 rgba(0,0,0,0.3); }
+.reminder-item.is-done { opacity: 0.5; }
+.reminder-item.is-done .reminder-text { text-decoration: line-through; }
+.reminder-done { flex: 0 0 auto; width: 26px; height: 26px; font-size: 14px; color: var(--accent-cyan); background: transparent; border: var(--px) solid var(--border-pixel); cursor: pointer; font-family: var(--font-vt); }
+.reminder-done:hover { border-color: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
+.reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.reminder-text { font-family: var(--font-vt); font-size: 19px; color: var(--text-primary); word-break: break-word; }
+.reminder-meta { font-family: var(--font-pixel); font-size: 7px; color: var(--text-dim); letter-spacing: 1px; }
+.reminder-del { flex: 0 0 auto; width: 26px; height: 26px; font-size: 12px; color: #ff6b6b; background: transparent; border: var(--px) solid #ff6b6b; cursor: pointer; font-family: var(--font-vt); }
+.reminder-del:hover { background: #ff6b6b; color: #fff; }
+
 /* ═══ TOAST ═══ */
 .pixel-toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(60px); background: var(--bg-panel); border: 2px solid var(--toast-border); color: var(--toast-border); font-family: var(--font-pixel); font-size: 8px; padding: 12px 18px; z-index: 300; opacity: 0; transition: all 0.2s steps(4); white-space: nowrap; box-shadow: 3px 3px 0 0 rgba(0,0,0,0.5), 0 0 16px rgba(0,245,212,0.4); pointer-events: none; text-shadow: 0 0 6px var(--toast-border); }
 .pixel-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
