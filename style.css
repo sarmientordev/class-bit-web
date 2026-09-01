@@ -1474,10 +1474,19 @@ select.pixel-input { cursor: pointer; }
 .color-swatch.selected::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; text-shadow:1px 1px 0 rgba(0,0,0,0.8); font-weight:bold; }
 
 /* ═══ CUADERNO DE RECORDATORIOS ═══ */
+.modal-reminders { max-width: 560px; width: 92vw; }
+.reminder-book { display: flex; flex-direction: column; gap: 12px; }
+.reminder-book-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-bottom: 10px; border-bottom: var(--px) dashed var(--border-pixel); }
+.reminder-book-title { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 2px; color: var(--accent-cyan); text-shadow: 0 0 6px var(--accent-cyan); }
+.reminder-form-panel { display: none; }
+.reminder-form-panel.open { display: block; }
+.modal-reminders.is-adding .reminder-book { display: none; }
+.modal-reminders.is-adding #reminders-footer { display: none; }
 .reminder-form { display: flex; flex-direction: column; gap: 12px; }
-.reminder-divider { border-top: var(--px) dashed var(--border-pixel); margin: 2px 0; }
-.reminders-list { display: flex; flex-direction: column; gap: 8px; max-height: 42vh; overflow-y: auto; }
-.reminders-empty { font-family: var(--font-pixel); font-size: 8px; color: var(--text-dim); text-align: center; padding: 18px 0; }
+.reminder-form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2px; }
+.reminders-list { display: flex; flex-direction: column; gap: 8px; max-height: 44vh; overflow-y: auto; }
+.reminders-empty { font-family: var(--font-pixel); font-size: 8px; color: var(--text-dim); text-align: center; padding: 24px 0; line-height: 1.8; }
+.reminders-empty span { color: var(--accent-magenta); font-size: 7px; }
 .reminder-item { display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: var(--px) solid var(--border-pixel); padding: 10px 12px; box-shadow: 2px 2px 0 0 rgba(0,0,0,0.3); }
 .reminder-item.is-done { opacity: 0.5; }
 .reminder-item.is-done .reminder-text { text-decoration: line-through; }

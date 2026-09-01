@@ -920,16 +920,29 @@ function persist() {
 const REM_TYPE = { tarea: '📚', trabajo: '📄', examen: '📝', pendiente: '⏳' };
 
 function openReminders() {
+  hideReminderForm();
   renderReminders();
   const ov = document.getElementById('reminders-overlay');
   if (ov) ov.classList.add('open');
-  const t = document.getElementById('reminder-text');
-  if (t) setTimeout(() => t.focus(), 50);
 }
 
 function closeReminders() {
   const ov = document.getElementById('reminders-overlay');
   if (ov) ov.classList.remove('open');
+}
+
+function showReminderForm() {
+  const ov = document.getElementById('reminders-overlay');
+  if (ov) ov.classList.add('is-adding');
+  const t = document.getElementById('reminder-text');
+  if (t) setTimeout(() => t.focus(), 60);
+}
+
+function hideReminderForm() {
+  const ov = document.getElementById('reminders-overlay');
+  if (ov) ov.classList.remove('is-adding');
+  const t = document.getElementById('reminder-text');
+  if (t) t.value = '';
 }
 
 function sortReminders(list) {
@@ -976,8 +989,8 @@ function addReminder() {
   persist();
   textEl.value = '';
   showToast('📓 Recordatorio guardado');
+  hideReminderForm();
   renderReminders();
-  textEl.focus();
 }
 
 function toggleReminder(id) {
@@ -1306,6 +1319,8 @@ function bindEvents() {
   document.getElementById('btn-reminders-m') && document.getElementById('btn-reminders-m').addEventListener('click', openReminders);
   document.getElementById('reminders-close') && document.getElementById('reminders-close').addEventListener('click', closeReminders);
   document.getElementById('btn-reminders-done') && document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
+  document.getElementById('btn-reminders-add') && document.getElementById('btn-reminders-add').addEventListener('click', showReminderForm);
+  document.getElementById('btn-reminders-cancel') && document.getElementById('btn-reminders-cancel').addEventListener('click', hideReminderForm);
   document.getElementById('btn-add-reminder') && document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
   document.getElementById('btn-reminders-clear') && document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
   document.getElementById('reminders-overlay') && document.getElementById('reminders-overlay').addEventListener('click', (e) => {
