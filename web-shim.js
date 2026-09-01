@@ -26,6 +26,7 @@
   const SEED = {
     version: 3,
     classes: [],
+    reminders: [],
     settings: { showClock: true, use24h: false, theme: "pixel", soundEnabled: true, soundChoice: "retro", remind15: true, remind5: true, remindTomorrow: true, custom: {} }
   };
 
@@ -36,15 +37,31 @@
       localStorage.removeItem(SETTINGS_KEY);
     }
     if (!localStorage.getItem(SEED_FLAG) || !readJSON(DATA_KEY)) {
-      if (!readJSON(DATA_KEY)) writeJSON(DATA_KEY, { version: 3, webClean: true, classes: [] });
+      if (!readJSON(DATA_KEY)) writeJSON(DATA_KEY, { version: 3, webClean: true, classes: [], reminders: [] });
       if (!readJSON(SETTINGS_KEY)) writeJSON(SETTINGS_KEY, SEED.settings);
       localStorage.setItem(SEED_FLAG, '1');
     }
   }
 
   window.scheduleAPI = {
-    loadData: () => { seedIfNeeded(); return Promise.resolve(readJSON(DATA_KEY) || { version: 3, classes: [] }); },
-    saveData: (classes) => { const d = readJSON(DATA_KEY) || { version: 3, classes: [] }; d.classes = classes; writeJSON(DATA_KEY, d); return Promise.resolve(); },
+    loadData: () => {
+      seedIfNeeded();
+      const d = readJSON(DATA_KEY) || { version: 3, classes: [], reminders: [] };
+      if (!Array.isArray(d.reminders)) d.reminders = [];
+      return Promise.resolve(d);
+    },
+    saveData: (payload) => {
+      const d = readJSON(DATA_KEY) || { version: 3, classes: [], reminders: [], webClean: true };
+      // nuevo: payload puede ser el objeto completo { classes, reminders } o un array de clases
+      if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
+        if (Array.isArray(payload.classes)) d.classes = payload.classes;
+        if (Array.isArray(payload.reminders)) d.reminders = payload.reminders;
+      } else if (Array.isArray(payload)) {
+        d.classes = payload;
+      }
+      writeJSON(DATA_KEY, d);
+      return Promise.resolve();
+    },
     seedData: () => Promise.resolve(),
     loadSettings: () => { seedIfNeeded(); return Promise.resolve(readJSON(SETTINGS_KEY) || SEED.settings); },
     saveSettings: (settings) => { writeJSON(SETTINGS_KEY, settings); return Promise.resolve(); },
