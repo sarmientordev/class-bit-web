@@ -1254,7 +1254,9 @@ body {
 }
 .w-col-head { font-family: var(--font-pixel); font-size: 8px; color: var(--text-dim); text-align: center; padding: 8px 2px; background: var(--bg-panel); border: 1px solid var(--border-pixel); }
 .w-col-head.is-today { color: var(--accent-cyan); border-color: var(--accent-cyan); }
-.w-time-label { font-family: var(--font-vt); font-size: 14px; color: var(--text-dim); text-align: right; padding-right: 6px; line-height: 1.2; }
+.w-time-label { font-family: var(--font-vt); font-size: 15px; color: #f6efdd; text-shadow: 0 0 7px rgba(246,239,221,0.4); text-align: right; padding-right: 6px; line-height: 1.2; }
+html[data-theme="light"] .w-time-label { color: #7a5c00; text-shadow: none; }
+html[data-theme="spider"] .w-time-label { color: #0d2137; text-shadow: none; }
 .w-cell { min-height: 30px; background: var(--wcell-bg); border: 1px solid var(--wcell-border); position: relative; overflow: visible; }
 .w-cell.has { padding: 0; }
 .w-chip {
@@ -1473,28 +1475,28 @@ select.pixel-input { cursor: pointer; }
 .color-swatch:hover, .color-swatch.selected { border-color: #fff; transform: scale(1.15); box-shadow: 0 0 12px currentColor; }
 .color-swatch.selected::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:14px; color:#fff; text-shadow:1px 1px 0 rgba(0,0,0,0.8); font-weight:bold; }
 
-/* ═══ LIBRO DE RECORDATORIOS — VENTANA COMPLETA (8-BIT) ═══ */
-.book-view { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0; overflow: hidden; background: var(--bg-card); }
+/* ═══ LIBRO DE RECORDATORIOS — LA PASTA ATA LOS BORDES DE LA VENTANITA ═══ */
+.book-shell { position: relative; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; width: min(780px, 92vw); max-height: 88vh; overflow: hidden; background: #6b4a2c; border: 10px solid #6b4a2c; box-shadow: 0 0 0 3px var(--border-pixel), 12px 16px 0 rgba(0,0,0,0.5); }
 
-/* ▸ CABECERA ARCADE */
-.book-bar { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 4px solid var(--border-pixel); background: var(--bg-card); box-shadow: 0 4px 0 0 rgba(0,0,0,0.35); position: relative; z-index: 10; }
-.book-title { flex: 1 1 auto; margin: 0; text-align: center; font-family: var(--font-pixel); font-size: 9px; letter-spacing: 3px; line-height: 1.5; color: var(--text-primary); text-shadow: 2px 2px 0 var(--accent-magenta); }
-.book-top-btn { flex: 0 0 auto; font-family: var(--font-pixel); font-size: 7px; letter-spacing: 1px; cursor: pointer; color: var(--text-primary); background: transparent; border: 3px solid var(--border-pixel); box-shadow: 3px 3px 0 0 rgba(0,0,0,0.4); padding: 8px 10px; text-transform: uppercase; }
+/* ▸ CABECERA DE PASTA (tapa superior) */
+.book-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 4px solid #8a6136; background: #6b4a2c; position: relative; z-index: 10; }
+.book-title { flex: 1 1 auto; margin: 0; text-align: center; font-family: var(--font-pixel); font-size: 8px; letter-spacing: 2px; line-height: 1.5; color: #ffe9c9; text-shadow: 2px 2px 0 var(--accent-magenta); }
+.book-top-btn { flex: 0 0 auto; font-family: var(--font-pixel); font-size: 7px; letter-spacing: 1px; cursor: pointer; color: #ffe9c9; background: transparent; border: 3px solid #c9a05f; box-shadow: 3px 3px 0 0 rgba(0,0,0,0.45); padding: 7px 9px; text-transform: uppercase; }
 .book-top-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 3px 3px 0 0 var(--accent-cyan); }
-.book-top-btn.add { width: 42px; padding: 8px 0; }
+.book-top-btn.add { width: 40px; padding: 7px 0; }
 .book-top-btn.primary { color: var(--accent-cyan); border-color: var(--accent-cyan); }
 
-/* ▸ ESCENARIO: EL LIBRO LLENA LA VENTANA */
-.book-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 18px 22px; position: relative; }
+/* ▸ ESCENARIO: el libro pegado a los bordes (pasta = marco de la mini ventana) */
+.book-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 10px 12px; background: #4d3219; }
 .book-wrap { position: relative; perspective: 1400px; height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; }
-.book { display: grid; grid-template-columns: minmax(0,1fr) 30px minmax(0,1fr); height: 100%; width: 100%; max-width: 1120px; background: #f6efdd; border: 4px solid var(--border-pixel); box-shadow: 0 0 0 3px var(--accent-cyan), 8px 8px 0 0 rgba(0,0,0,0.45); }
+.book { display: grid; grid-template-columns: minmax(0,1fr) 26px minmax(0,1fr); height: 100%; width: 100%; background: #f6efdd; border: 4px solid #3a2713; box-shadow: 0 0 0 2px var(--accent-cyan), 6px 8px 0 0 rgba(0,0,0,0.45); }
 
 /* ▸ ENCUADERNACIÓN (BIZCOCHO) */
-.book-gutter { display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 18px 0; background: #ece2c6; border-left: 2px solid rgba(60,45,15,0.28); border-right: 2px solid rgba(60,45,15,0.28); }
+.book-gutter { display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 14px 0; background: #e9dfc0; border-left: 2px solid rgba(60,45,15,0.28); border-right: 2px solid rgba(60,45,15,0.28); }
 .book-spiral { width: 14px; height: 14px; border-radius: 50%; background: var(--accent-magenta); border: 2px solid #2b1a05; box-shadow: 3px 3px 0 rgba(0,0,0,0.35); }
 
 /* ▸ HOJAS DE PAPEL */
-.book-page { display: flex; flex-direction: column; gap: 8px; min-height: 0; padding: 16px 14px; background: #fdf8ea; background-image: repeating-linear-gradient(transparent 0 30px, rgba(75,60,25,0.16) 30px 32px); overflow: hidden; }
+.book-page { display: flex; flex-direction: column; gap: 8px; min-height: 0; padding: 13px 12px; background: #fdf8ea; background-image: repeating-linear-gradient(transparent 0 30px, rgba(75,60,25,0.16) 30px 32px); overflow: hidden; }
 .book-page.pg-left { border-right: 2px dashed rgba(60,45,15,0.3); }
 .book-page.pg-right { border-left: 2px dashed rgba(60,45,15,0.12); }
 .book-page-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; border-bottom: 2px solid rgba(60,45,15,0.35); font-family: var(--font-pixel); }
@@ -1503,12 +1505,12 @@ select.pixel-input { cursor: pointer; }
 .book-page-list { display: flex; flex-direction: column; gap: 6px; flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 2px; }
 .book-page-list::-webkit-scrollbar { width: 6px; }
 .book-page-list::-webkit-scrollbar-thumb { background: rgba(60,45,15,0.35); border-radius: 0; }
-.book-page .reminder-item { display: flex; align-items: center; gap: 8px; background: transparent; border: 0; box-shadow: none; border-bottom: 2px dashed rgba(60,45,15,0.3); padding: 8px 2px; }
+.book-page .reminder-item { display: flex; align-items: center; gap: 8px; background: transparent; border: 0; box-shadow: none; border-bottom: 2px dashed rgba(60,45,15,0.3); padding: 7px 2px; }
 .book-page .reminder-item.is-done { opacity: 0.45; }
-.book-page .reminder-done { flex: 0 0 auto; width: 24px; height: 24px; font-size: 14px; color: #2b1a05; background: rgba(255,255,255,0.45); border: 2px solid rgba(60,45,15,0.5); box-shadow: 2px 2px 0 rgba(60,45,15,0.3); cursor: pointer; font-family: var(--font-vt); }
+.book-page .reminder-done { flex: 0 0 auto; width: 24px; height: 24px; font-size: 13px; color: #2b1a05; background: rgba(255,255,255,0.45); border: 2px solid rgba(60,45,15,0.5); box-shadow: 2px 2px 0 rgba(60,45,15,0.3); cursor: pointer; font-family: var(--font-vt); }
 .book-page .reminder-done:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
 .book-page .reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.book-page .reminder-text { font-family: var(--font-vt); font-size: 20px; color: #241c0e; word-break: break-word; }
+.book-page .reminder-text { font-family: var(--font-vt); font-size: 18px; color: #241c0e; word-break: break-word; }
 .book-page .reminder-meta { font-family: var(--font-pixel); font-size: 7px; color: rgba(60,45,15,0.65); letter-spacing: 1px; }
 .book-page .reminder-del { flex: 0 0 auto; width: 24px; height: 24px; font-size: 12px; color: #b04040; background: rgba(255,255,255,0.45); border: 2px solid rgba(60,45,15,0.5); box-shadow: 2px 2px 0 rgba(60,45,15,0.3); cursor: pointer; font-family: var(--font-vt); }
 .book-page .reminder-del:hover { background: #b04040; color: #fff; }
@@ -1518,7 +1520,7 @@ select.pixel-input { cursor: pointer; }
 .book-empty span { color: var(--accent-magenta); font-size: 7px; }
 
 /* ▸ HOJA DE ANIMACIÓN (VOLTEO) */
-.book-leaf { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; background: #fdf8ea; border: 4px solid var(--border-pixel); }
+.book-leaf { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; background: #fdf8ea; border: 4px solid #3a2713; }
 .book-wrap.turning-next .book-leaf { transform-origin: left center; animation: leafTurnNext 0.6s ease; }
 .book-wrap.turning-prev .book-leaf { transform-origin: right center; animation: leafTurnPrev 0.6s ease; }
 @keyframes leafTurnNext {
@@ -1538,39 +1540,41 @@ select.pixel-input { cursor: pointer; }
   100% { transform: rotateY(0deg); opacity: 0; }
 }
 
-/* ▸ BARRA INFERIOR ARCADE */
-.book-bottombar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px; border-top: 4px solid var(--border-pixel); background: var(--bg-card); box-shadow: 0 -4px 0 0 rgba(0,0,0,0.35); position: relative; z-index: 10; }
-.book-pager { display: flex; align-items: center; gap: 14px; }
-.book-page-btn { width: 42px; height: 38px; font-family: var(--font-vt); font-size: 16px; color: var(--text-primary); background: var(--bg-card); border: 3px solid var(--border-pixel); box-shadow: 3px 3px 0 0 rgba(0,0,0,0.4); cursor: pointer; }
+/* ▸ BARRA INFERIOR DE PASTA (contraportada) */
+.book-bottombar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-top: 4px solid #8a6136; background: #6b4a2c; position: relative; z-index: 10; }
+.book-pager { display: flex; align-items: center; gap: 12px; }
+.book-page-btn { width: 38px; height: 34px; font-family: var(--font-vt); font-size: 16px; color: #ffe9c9; background: #4d3219; border: 3px solid #c9a05f; box-shadow: 3px 3px 0 0 rgba(0,0,0,0.45); cursor: pointer; }
 .book-page-btn:hover:not(.disabled) { border-color: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); color: var(--accent-cyan); }
 .book-page-btn.disabled { opacity: 0.35; pointer-events: none; }
-.book-page-count { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 2px; color: var(--accent-cyan); text-shadow: 0 0 6px var(--accent-cyan); }
+.book-page-count { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 2px; color: #ffe9c9; text-shadow: 0 0 6px var(--accent-cyan); }
 
 /* ▸ FORMULARIO PARA AGREGAR */
-.reminder-form-panel { display: none; flex: 1 1 auto; align-items: center; justify-content: center; padding: 22px; min-height: 0; }
-.book-view.is-adding .book-stage, .book-view.is-adding .book-bottombar { display: none; }
-.book-view.is-adding .reminder-form-panel { display: flex; }
-.reminder-form { width: 100%; max-width: 540px; background: var(--bg-card); border: 4px solid var(--border-pixel); box-shadow: 6px 6px 0 rgba(0,0,0,0.4), 0 0 0 3px rgba(255,255,255,0.06); padding: 22px; display: flex; flex-direction: column; gap: 14px; }
-.reminder-form .form-title { font-size: 10px; color: var(--accent-cyan); text-shadow: 2px 2px 0 var(--accent-magenta); margin-bottom: 2px; }
+.reminder-form-panel { display: none; flex: 1 1 auto; align-items: center; justify-content: center; padding: 16px; min-height: 0; }
+.modal-overlay.is-adding .book-stage, .modal-overlay.is-adding .book-bottombar { display: none; }
+.modal-overlay.is-adding .reminder-form-panel { display: flex; }
+.reminder-form { width: 100%; max-width: 520px; background: #4d3219; border: 4px solid #c9a05f; box-shadow: 0 0 0 3px var(--border-pixel), 6px 8px 0 rgba(0,0,0,0.45); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.reminder-form .form-title { font-size: 9px; color: var(--accent-cyan); text-shadow: 2px 2px 0 var(--accent-magenta); margin-bottom: 2px; }
 .reminder-form-actions { display: flex; justify-content: flex-end; gap: 12px; }
 
 @media (max-width: 640px) {
-  .book-bar { padding: 8px 10px; gap: 6px; }
-  .book-title { font-size: 7px; letter-spacing: 1px; }
-  .book-top-btn { font-size: 6px; padding: 6px 8px; }
-  .book-top-btn.add { width: 34px; padding: 6px 0; }
-  .book-stage { padding: 10px; }
-  .book { grid-template-columns: minmax(0,1fr) 20px minmax(0,1fr); border-width: 3px; }
-  .book-page { padding: 10px 8px; }
+  .book-shell { max-height: 92vh; border-width: 6px; }
+  .book-bar { padding: 8px 8px; gap: 6px; }
+  .book-title { font-size: 6px; letter-spacing: 1px; }
+  .book-top-btn { font-size: 6px; padding: 6px 7px; }
+  .book-top-btn.add { width: 30px; padding: 6px 0; }
+  .book-stage { padding: 6px 8px; }
+  .book { grid-template-columns: minmax(0,1fr) 18px minmax(0,1fr); border-width: 3px; }
+  .book-page { padding: 9px 7px; }
   .book-page .reminder-text { font-size: 15px; }
   .book-page .reminder-done, .book-page .reminder-del { width: 20px; height: 20px; }
   .book-page-num, .book-page-label { font-size: 6px; }
   .book-page .reminder-meta { font-size: 6px; }
-  .book-bottombar { gap: 8px; padding: 8px 10px; }
-  .book-page-btn { width: 34px; height: 32px; }
+  .book-bottombar { gap: 8px; padding: 8px 8px; }
+  .book-page-btn { width: 32px; height: 30px; }
   .book-page-count { font-size: 7px; }
-  .reminder-form-panel { padding: 12px; }
-  .reminder-form { padding: 16px; }
+  .book-spiral { width: 10px; height: 10px; }
+  .reminder-form-panel { padding: 10px; }
+  .reminder-form { padding: 14px; }
 }
 
 /* ═══ TOAST ═══ */
