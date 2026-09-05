@@ -342,8 +342,38 @@
           <span class="reminder-book-title">📖 MIS ACTIVIDADES</span>
           <button class="pixel-btn btn-primary" id="btn-reminders-add">➕ AGREGAR ACTIVIDAD</button>
         </div>
-        <div class="reminders-list" id="reminders-list"></div>
-        <p class="reminders-empty" id="reminders-empty">Tu cuaderno está vacío 📓<br><span>Pulsa "Agregar actividad" para empezar</span></p>
+        <div class="book-wrap" id="reminder-book-wrap">
+          <div class="book">
+            <div class="book-page pg-left">
+              <div class="book-page-head">
+                <span class="book-page-label">PÁGINA</span>
+                <span class="book-page-num" id="book-page-num-left">1</span>
+              </div>
+              <div class="book-page-list" id="reminders-list-left"></div>
+            </div>
+            <div class="book-gutter">
+              <span class="book-spiral"></span>
+              <span class="book-spiral"></span>
+              <span class="book-spiral"></span>
+              <span class="book-spiral"></span>
+              <span class="book-spiral"></span>
+            </div>
+            <div class="book-page pg-right">
+              <div class="book-page-head">
+                <span class="book-page-label">PÁGINA</span>
+                <span class="book-page-num" id="book-page-num-right">2</span>
+              </div>
+              <div class="book-page-list" id="reminders-list-right"></div>
+            </div>
+          </div>
+          <p class="book-empty" id="reminders-empty">Tu cuaderno está vacío 📓<br><span>Pulsa "Agregar actividad" para empezar</span></p>
+          <span class="book-leaf" aria-hidden="true"></span>
+        </div>
+        <div class="book-pager">
+          <button class="book-page-btn disabled" id="btn-book-prev" title="Página anterior" aria-label="Página anterior">◀</button>
+          <span class="book-page-count" id="book-page-count">PÁG. 1/1</span>
+          <button class="book-page-btn disabled" id="btn-book-next" title="Página siguiente" aria-label="Página siguiente">▶</button>
+        </div>
       </div>
       <!-- FORMULARIO PARA AGREGAR -->
       <div class="reminder-form-panel" id="reminder-form-panel">

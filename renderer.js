@@ -918,9 +918,13 @@ function persist() {
 
 // ── CUADERNO DE RECORDATORIOS ────────────────────
 const REM_TYPE = { tarea: '📚', trabajo: '📄', examen: '📝', pendiente: '⏳' };
+const REM_PER_PAGE = 5;                 // pendientes por hoja
+const REM_SPREAD = REM_PER_PAGE * 2;    // vista de libro abierto (2 hojas)
+let reminderPage = 0;                   // hoja (par de páginas) actual
 
 function openReminders() {
   hideReminderForm();
+  reminderPage = 0;
   renderReminders();
   const ov = document.getElementById('reminders-overlay');
   if (ov) ov.classList.add('open');
@@ -958,25 +962,66 @@ function formatReminderDate(dateStr) {
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
 }
 
-function renderReminders() {
-  const list = document.getElementById('reminders-list');
+function reminderItemHtml(r) {
+  const done = r.done ? ' is-done' : '';
+  const type = REM_TYPE[r.type] || '📌';
+  return `
+    <article class="reminder-item${done}" data-id="${esc(r.id)}">
+      <button class="reminder-done" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
+      <div class="reminder-main">
+        <div class="reminder-text">${type} ${esc(r.text)}</div>
+        <div class="reminder-meta">🗓 ${esc(formatReminderDate(r.date))}</div>
+      </div>
+      <button class="reminder-del" data-id="${esc(r.id)}" title="Eliminar" aria-label="Eliminar">✕</button>
+    </article>`;
+}
+
+function renderReminders(animate) {
+  const lList = document.getElementById('reminders-list-left');
+  const rList = document.getElementById('reminders-list-right');
   const empty = document.getElementById('reminders-empty');
-  if (!list) return;
+  if (!lList || !rList) return;
   const sorted = sortReminders(state.reminders);
-  list.innerHTML = sorted.map(r => {
-    const done = r.done ? ' is-done' : '';
-    const type = REM_TYPE[r.type] || '📌';
-    return `
-      <article class="reminder-item${done}" data-id="${esc(r.id)}">
-        <button class="reminder-done" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
-        <div class="reminder-main">
-          <div class="reminder-text">${type} ${esc(r.text)}</div>
-          <div class="reminder-meta">🗓 ${esc(formatReminderDate(r.date))}</div>
-        </div>
-        <button class="reminder-del" data-id="${esc(r.id)}" title="Eliminar" aria-label="Eliminar">✕</button>
-      </article>`;
-  }).join('');
-  if (empty) empty.style.display = state.reminders.length ? 'none' : 'block';
+  const totalPages = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
+  if (reminderPage >= totalPages) reminderPage = totalPages - 1;
+  if (reminderPage < 0) reminderPage = 0;
+  const from = reminderPage * REM_SPREAD;
+  const left = sorted.slice(from, from + REM_PER_PAGE);
+  const right = sorted.slice(from + REM_PER_PAGE, from + REM_SPREAD);
+  lList.innerHTML = left.map(reminderItemHtml).join('');
+  rList.innerHTML = right.map(reminderItemHtml).join('');
+  const pl = document.getElementById('book-page-num-left');
+  const pr = document.getElementById('book-page-num-right');
+  const pgL = reminderPage * 2 + 1;
+  const pgR = pgL + 1;
+  if (pl) pl.textContent = sorted.length ? pgL : '';
+  if (pr) pr.textContent = sorted.length ? pgR : '';
+  const count = document.getElementById('book-page-count');
+  if (count) count.textContent = `PÁG. ${reminderPage + 1}/${totalPages}`;
+  const prev = document.getElementById('btn-book-prev');
+  const next = document.getElementById('btn-book-next');
+  if (prev) prev.classList.toggle('disabled', reminderPage <= 0);
+  if (next) next.classList.toggle('disabled', reminderPage >= totalPages - 1);
+  if (empty) empty.style.display = sorted.length ? 'none' : 'block';
+  if (animate && sorted.length) {
+    const wrap = document.getElementById('reminder-book-wrap');
+    if (wrap) {
+      wrap.classList.remove('turning-next', 'turning-prev');
+      void wrap.offsetWidth;
+      wrap.classList.add(animate);
+      setTimeout(() => wrap.classList.remove('turning-next', 'turning-prev'), 650);
+    }
+  }
+}
+
+function reminderPageNext() {
+  const sorted = sortReminders(state.reminders);
+  const totalPages = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
+  if (reminderPage < totalPages - 1) { reminderPage++; renderReminders('turning-next'); }
+}
+
+function reminderPagePrev() {
+  if (reminderPage > 0) { reminderPage--; renderReminders('turning-prev'); }
 }
 
 function addReminder() {
@@ -1326,12 +1371,14 @@ function bindEvents() {
   document.getElementById('reminders-overlay') && document.getElementById('reminders-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('reminders-overlay')) closeReminders();
   });
-  document.getElementById('reminders-list') && document.getElementById('reminders-list').addEventListener('click', (e) => {
+  document.getElementById('reminder-book') && document.getElementById('reminder-book').addEventListener('click', (e) => {
     const doneBtn = e.target.closest('.reminder-done');
     if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
     const delBtn = e.target.closest('.reminder-del');
     if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
   });
+  document.getElementById('btn-book-next') && document.getElementById('btn-book-next').addEventListener('click', reminderPageNext);
+  document.getElementById('btn-book-prev') && document.getElementById('btn-book-prev').addEventListener('click', reminderPagePrev);
   document.getElementById('reminder-text') && document.getElementById('reminder-text').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') addReminder();
   });
