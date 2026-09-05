@@ -328,85 +328,82 @@
   </div>
 </div>
 
-<!-- ░░░ CUADERNO DE RECORDATORIOS OVERLAY ░░░ -->
-<div class="modal-overlay" id="reminders-overlay" aria-modal="true" role="dialog" aria-labelledby="reminders-title">
-  <div class="modal-box modal-reminders">
-    <div class="modal-header">
-      <h2 class="modal-title" id="reminders-title">📓 CUADERNO DE RECORDATORIOS</h2>
-      <button class="pixel-btn icon-btn modal-close" id="reminders-close" aria-label="Cerrar">✕</button>
-    </div>
-    <div class="modal-body">
-      <!-- VISTA LIBRO / CUADERNO -->
-      <div class="reminder-book" id="reminder-book">
-        <div class="reminder-book-head">
-          <span class="reminder-book-title">📖 MIS ACTIVIDADES</span>
-          <button class="pixel-btn btn-primary" id="btn-reminders-add">➕ AGREGAR ACTIVIDAD</button>
-        </div>
-        <div class="book-wrap" id="reminder-book-wrap">
-          <div class="book">
-            <div class="book-page pg-left">
-              <div class="book-page-head">
-                <span class="book-page-label">PÁGINA</span>
-                <span class="book-page-num" id="book-page-num-left">1</span>
-              </div>
-              <div class="book-page-list" id="reminders-list-left"></div>
-            </div>
-            <div class="book-gutter">
-              <span class="book-spiral"></span>
-              <span class="book-spiral"></span>
-              <span class="book-spiral"></span>
-              <span class="book-spiral"></span>
-              <span class="book-spiral"></span>
-            </div>
-            <div class="book-page pg-right">
-              <div class="book-page-head">
-                <span class="book-page-label">PÁGINA</span>
-                <span class="book-page-num" id="book-page-num-right">2</span>
-              </div>
-              <div class="book-page-list" id="reminders-list-right"></div>
-            </div>
+<!-- ░░░ LIBRO DE RECORDATORIOS — VENTANA COMPLETA ░░░ -->
+<div class="modal-overlay book-view" id="reminders-overlay" aria-modal="true" role="dialog" aria-labelledby="reminders-title">
+  <header class="book-bar">
+    <button class="book-top-btn" id="reminders-close" aria-label="Volver">◀ VOLVER</button>
+    <h2 class="book-title" id="reminders-title">📓 LIBRO DE ACTIVIDADES</h2>
+    <button class="book-top-btn add" id="btn-reminders-add" aria-label="Agregar actividad">➕</button>
+  </header>
+
+  <main class="book-stage" id="reminder-book">
+    <div class="book-wrap" id="reminder-book-wrap">
+      <div class="book">
+        <div class="book-page pg-left">
+          <div class="book-page-head">
+            <span class="book-page-label">PÁGINA</span>
+            <span class="book-page-num" id="book-page-num-left">1</span>
           </div>
-          <p class="book-empty" id="reminders-empty">Tu cuaderno está vacío 📓<br><span>Pulsa "Agregar actividad" para empezar</span></p>
-          <span class="book-leaf" aria-hidden="true"></span>
+          <div class="book-page-list" id="reminders-list-left"></div>
         </div>
-        <div class="book-pager">
-          <button class="book-page-btn disabled" id="btn-book-prev" title="Página anterior" aria-label="Página anterior">◀</button>
-          <span class="book-page-count" id="book-page-count">PÁG. 1/1</span>
-          <button class="book-page-btn disabled" id="btn-book-next" title="Página siguiente" aria-label="Página siguiente">▶</button>
+        <div class="book-gutter">
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+        </div>
+        <div class="book-page pg-right">
+          <div class="book-page-head">
+            <span class="book-page-label">PÁGINA</span>
+            <span class="book-page-num" id="book-page-num-right">2</span>
+          </div>
+          <div class="book-page-list" id="reminders-list-right"></div>
         </div>
       </div>
-      <!-- FORMULARIO PARA AGREGAR -->
-      <div class="reminder-form-panel" id="reminder-form-panel">
-        <div class="reminder-form">
-          <div class="form-group">
-            <label class="pixel-label" for="reminder-text">¿QUÉ TIENES QUE HACER?</label>
-            <input class="pixel-input" type="text" id="reminder-text" placeholder="Ej: entrega trabajo de Cálculo" maxlength="120" />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="pixel-label" for="reminder-type">TIPO</label>
-              <select class="pixel-input" id="reminder-type">
-                <option value="tarea">📚 TAREA</option>
-                <option value="trabajo">📄 TRABAJO</option>
-                <option value="examen">📝 EXAMEN</option>
-                <option value="pendiente">⏳ PENDIENTE</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="pixel-label" for="reminder-date">FECHA</label>
-              <input class="pixel-input" type="date" id="reminder-date" />
-            </div>
-          </div>
-          <div class="reminder-form-actions">
-            <button class="pixel-btn btn-secondary" id="btn-reminders-cancel">← CANCELAR</button>
-            <button class="pixel-btn btn-primary" id="btn-add-reminder">AGREGAR ▶</button>
-          </div>
+      <p class="book-empty" id="reminders-empty">Tu libro está vacío 📓<br><span>Pulsa "+" para empezar</span></p>
+      <span class="book-leaf" aria-hidden="true"></span>
+    </div>
+  </main>
+
+  <footer class="book-bottombar">
+    <button class="book-top-btn" id="btn-reminders-clear">LIMPIAR HECHOS</button>
+    <div class="book-pager">
+      <button class="book-page-btn disabled" id="btn-book-prev" title="Página anterior" aria-label="Página anterior">◀</button>
+      <span class="book-page-count" id="book-page-count">PÁG. 1/1</span>
+      <button class="book-page-btn disabled" id="btn-book-next" title="Página siguiente" aria-label="Página siguiente">▶</button>
+    </div>
+    <button class="book-top-btn primary" id="btn-reminders-done">LISTO ▶</button>
+  </footer>
+
+  <!-- FORMULARIO PARA AGREGAR -->
+  <div class="reminder-form-panel" id="reminder-form-panel">
+    <div class="reminder-form">
+      <h3 class="book-title form-title">➕ NUEVA ACTIVIDAD</h3>
+      <div class="form-group">
+        <label class="pixel-label" for="reminder-text">¿QUÉ TIENES QUE HACER?</label>
+        <input class="pixel-input" type="text" id="reminder-text" placeholder="Ej: entrega trabajo de Cálculo" maxlength="120" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="pixel-label" for="reminder-type">TIPO</label>
+          <select class="pixel-input" id="reminder-type">
+            <option value="tarea">📚 TAREA</option>
+            <option value="trabajo">📄 TRABAJO</option>
+            <option value="examen">📝 EXAMEN</option>
+            <option value="pendiente">⏳ PENDIENTE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="pixel-label" for="reminder-date">FECHA</label>
+          <input class="pixel-input" type="date" id="reminder-date" />
         </div>
       </div>
-    </div>
-    <div class="modal-footer" id="reminders-footer">
-      <button class="pixel-btn btn-secondary" id="btn-reminders-clear">LIMPIAR HECHOS</button>
-      <button class="pixel-btn btn-primary" id="btn-reminders-done">LISTO ▶</button>
+      <div class="reminder-form-actions">
+        <button class="pixel-btn btn-secondary" id="btn-reminders-cancel">← CANCELAR</button>
+        <button class="pixel-btn btn-primary" id="btn-add-reminder">AGREGAR ▶</button>
+      </div>
     </div>
   </div>
 </div>
