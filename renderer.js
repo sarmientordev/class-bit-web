@@ -22,7 +22,7 @@ let state = {
   selectedDay: -1, // 0-6
   selectedColor: PALETTE[0],
   editingId: null,
-  currentView: 'schedule', // schedule | week | festivos | stats
+  currentView: 'schedule', // schedule | week | festivos
   settings: { showClock: true, use24h: false, soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true },
 };
 
@@ -926,25 +926,21 @@ function openReminders() {
   hideReminderForm();
   reminderPage = 0;
   renderReminders();
-  const ov = document.getElementById('reminders-overlay');
-  if (ov) ov.classList.add('open');
+  document.getElementById('reminders-overlay').classList.add('open');
 }
 
 function closeReminders() {
-  const ov = document.getElementById('reminders-overlay');
-  if (ov) ov.classList.remove('open');
+  document.getElementById('reminders-overlay').classList.remove('open');
 }
 
 function showReminderForm() {
-  const ov = document.getElementById('reminders-overlay');
-  if (ov) ov.classList.add('is-adding');
+  document.getElementById('reminders-overlay').classList.add('is-adding');
   const t = document.getElementById('reminder-text');
   if (t) setTimeout(() => t.focus(), 60);
 }
 
 function hideReminderForm() {
-  const ov = document.getElementById('reminders-overlay');
-  if (ov) ov.classList.remove('is-adding');
+  document.getElementById('reminders-overlay').classList.remove('is-adding');
   const t = document.getElementById('reminder-text');
   if (t) t.value = '';
 }
@@ -962,18 +958,30 @@ function formatReminderDate(dateStr) {
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
 }
 
-function reminderItemHtml(r) {
+function reminderSlotFilledHtml(r, idx) {
   const done = r.done ? ' is-done' : '';
   const type = REM_TYPE[r.type] || '📌';
   return `
-    <article class="reminder-item${done}" data-id="${esc(r.id)}">
-      <button class="reminder-done" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
+    <div class="task-slot filled${done}" data-id="${esc(r.id)}">
+      <span class="slot-num">${idx + 1}</span>
+      <button class="reminder-done${done}" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
       <div class="reminder-main">
-        <div class="reminder-text">${type} ${esc(r.text)}</div>
+        <div class="reminder-text${done}">${type} ${esc(r.text)}</div>
         <div class="reminder-meta">🗓 ${esc(formatReminderDate(r.date))}</div>
       </div>
       <button class="reminder-del" data-id="${esc(r.id)}" title="Eliminar" aria-label="Eliminar">✕</button>
-    </article>`;
+    </div>`;
+}
+
+function reminderSlotEmptyHtml(idx) {
+  return `
+    <div class="task-slot empty btn-open-slot-form" data-slot="${idx}" title="Agregar tarea en el Slot ${idx + 1}">
+      <span class="slot-num">${idx + 1}</span>
+      <div class="slot-plus-box">
+        <span class="plus-icon">＋</span>
+        <span class="plus-text">AGREGAR TAREA</span>
+      </div>
+    </div>`;
 }
 
 function renderReminders(animate) {
@@ -981,27 +989,46 @@ function renderReminders(animate) {
   const rList = document.getElementById('reminders-list-right');
   const empty = document.getElementById('reminders-empty');
   if (!lList || !rList) return;
+
   const sorted = sortReminders(state.reminders);
-  const totalPages = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
-  if (reminderPage >= totalPages) reminderPage = totalPages - 1;
+  const totalSpreads = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
+  if (reminderPage >= totalSpreads) reminderPage = totalSpreads - 1;
   if (reminderPage < 0) reminderPage = 0;
-  const from = reminderPage * REM_SPREAD;
-  const left = sorted.slice(from, from + REM_PER_PAGE);
-  const right = sorted.slice(from + REM_PER_PAGE, from + REM_SPREAD);
-  lList.innerHTML = left.map(reminderItemHtml).join('');
-  rList.innerHTML = right.map(reminderItemHtml).join('');
+
+  const spreadStart = reminderPage * REM_SPREAD;
+  const leftTasks = sorted.slice(spreadStart, spreadStart + REM_PER_PAGE);
+  const rightTasks = sorted.slice(spreadStart + REM_PER_PAGE, spreadStart + REM_SPREAD);
+
+  let leftHtml = '';
+  for (let i = 0; i < REM_PER_PAGE; i++) {
+    const globalIdx = spreadStart + i;
+    const task = leftTasks[i];
+    leftHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx);
+  }
+
+  let rightHtml = '';
+  for (let i = 0; i < REM_PER_PAGE; i++) {
+    const globalIdx = spreadStart + REM_PER_PAGE + i;
+    const task = rightTasks[i];
+    rightHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx);
+  }
+
+  lList.innerHTML = leftHtml;
+  rList.innerHTML = rightHtml;
+
   const pl = document.getElementById('book-page-num-left');
   const pr = document.getElementById('book-page-num-right');
   const pgL = reminderPage * 2 + 1;
   const pgR = pgL + 1;
-  if (pl) pl.textContent = sorted.length ? pgL : '';
-  if (pr) pr.textContent = sorted.length ? pgR : '';
+  if (pl) pl.textContent = `PÁG. ${pgL}`;
+  if (pr) pr.textContent = `PÁG. ${pgR}`;
+
   const count = document.getElementById('book-page-count');
-  if (count) count.textContent = `PÁG. ${reminderPage + 1}/${totalPages}`;
+  if (count) count.textContent = `HOJA ${reminderPage + 1}/${totalSpreads}`;
   const prev = document.getElementById('btn-book-prev');
   const next = document.getElementById('btn-book-next');
   if (prev) prev.classList.toggle('disabled', reminderPage <= 0);
-  if (next) next.classList.toggle('disabled', reminderPage >= totalPages - 1);
+  if (next) next.classList.toggle('disabled', reminderPage >= totalSpreads - 1);
   if (empty) empty.style.display = sorted.length ? 'none' : 'block';
   if (animate && sorted.length) {
     const wrap = document.getElementById('reminder-book-wrap');
@@ -1197,8 +1224,9 @@ function nextUpcomingClass() {
 }
 
 function updateNextClassWidget() {
+  const header = document.getElementById('next-class-header');
   const ncs = document.getElementById('now-class-status');
-  if (!ncs) return;
+  if (!header || !ncs) return;
 
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -1238,33 +1266,29 @@ function updateNextClassWidget() {
     ncs.classList.remove('show');
   }
 
-  // Header: cuenta regresiva a la próxima clase de la semana (PC y variante mobile)
+  // Header: cuenta regresiva a la próxima clase de la semana
   const upcoming = nextUpcomingClass();
-  const applyNext = (suffix) => {
-    const h = document.getElementById('next-class-header' + suffix);
-    const labelEl = document.getElementById('nch-label' + suffix);
-    if (!h || !labelEl) return;
-    if (upcoming && !cur) {
-      const { cls, offset, dow } = upcoming;
-      const totalMin = offset * 1440 + (minutesOf(cls.startTime) - nowMin);
-      const secs = totalMin * 60 - now.getSeconds();
-      labelEl.textContent = offset === 0 ? 'PRÓXIMA' : offset === 1 ? 'MAÑANA' : DAY_SHORT[dow];
-      document.getElementById('nch-name' + suffix).textContent = cls.name;
-      const timerEl = document.getElementById('nch-timer' + suffix);
-      timerEl.textContent = fmtCountdown(secs);
-      // Color progresivo del contador según las horas que faltan (verde → rojo)
-      const hoursLeft = (offset * 24) + ((minutesOf(cls.startTime) - nowMin) / 60);
-      const ccolor = countdownColor(hoursLeft);
-      timerEl.style.color = ccolor;
-      timerEl.style.textShadow = `0 0 8px ${ccolor}`;
-      document.getElementById('nch-room' + suffix).textContent = cls.room ? `📍 ${cls.room}` : '';
-      h.classList.add('show');
-    } else if (cur) {
-      h.classList.remove('show');
+  if (upcoming && !cur) {
+    const { cls, offset, dow } = upcoming;
+    const totalMin = offset * 1440 + (minutesOf(cls.startTime) - nowMin);
+    const secs = totalMin * 60 - now.getSeconds();
+    const label = document.getElementById('nch-label');
+    if (label) {
+      label.textContent = offset === 0 ? 'PRÓXIMA' : offset === 1 ? 'MAÑANA' : DAY_SHORT[dow];
     }
-  };
-  applyNext('');      // variante PC
-  applyNext('-m');    // variante mobile
+    document.getElementById('nch-name').textContent = cls.name;
+    const timerEl = document.getElementById('nch-timer');
+    timerEl.textContent = fmtCountdown(secs);
+    // Color progresivo del contador según las horas que faltan (verde → rojo)
+    const hoursLeft = (offset * 24) + ((minutesOf(cls.startTime) - nowMin) / 60);
+    const ccolor = countdownColor(hoursLeft);
+    timerEl.style.color = ccolor;
+    timerEl.style.textShadow = `0 0 8px ${ccolor}`;
+    document.getElementById('nch-room').textContent = cls.room ? `📍 ${cls.room}` : '';
+    header.classList.add('show');
+  } else if (cur) {
+    header.classList.remove('show');
+  }
 }
 
 // ── STARS ────────────────────────────────────────
@@ -1330,59 +1354,43 @@ function bindEvents() {
     });
   });
 
-  // MENÚ DE ACCIONES (⋮)
-  const menuBtn = document.getElementById('btn-menu');
-  const actionMenu = document.getElementById('action-menu');
-  const closeMenu = () => { if (actionMenu) actionMenu.classList.remove('open'); };
-  const toggleMenu = (e) => { e.stopPropagation(); if (actionMenu) actionMenu.classList.toggle('open'); };
-  if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-  if (actionMenu) actionMenu.addEventListener('click', (e) => { e.stopPropagation(); });
-  document.addEventListener('click', closeMenu);
-  const menuItems = actionMenu ? Array.from(actionMenu.querySelectorAll('.action-item')) : [];
-  menuItems.forEach((it) => it.addEventListener('click', closeMenu));
-
   document.getElementById('btn-add').addEventListener('click', openAddModal);
-  document.getElementById('btn-add-m') && document.getElementById('btn-add-m').addEventListener('click', openAddModal);
   document.getElementById('btn-add-empty').addEventListener('click', openAddModal);
 
-  const testNotif = () => {
+  document.getElementById('btn-reminders').addEventListener('click', openReminders);
+  document.getElementById('reminders-close').addEventListener('click', closeReminders);
+  document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
+  document.getElementById('btn-reminders-add').addEventListener('click', showReminderForm);
+  document.getElementById('btn-reminders-cancel').addEventListener('click', hideReminderForm);
+  document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
+  document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
+  document.getElementById('reminders-overlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('reminders-overlay')) closeReminders();
+  });
+  document.getElementById('reminder-book').addEventListener('click', (e) => {
+    const doneBtn = e.target.closest('.reminder-done');
+    if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
+    const delBtn = e.target.closest('.reminder-del');
+    if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
+    const emptySlot = e.target.closest('.task-slot.empty');
+    if (emptySlot) { showReminderForm(); return; }
+  });
+  document.getElementById('btn-book-next').addEventListener('click', reminderPageNext);
+  document.getElementById('btn-book-prev').addEventListener('click', reminderPagePrev);
+  document.getElementById('reminder-text').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addReminder();
+  });
+
+  document.getElementById('btn-notify').addEventListener('click', () => {
     if (window.scheduleAPI) window.scheduleAPI.testNotification();
-  };
-  document.getElementById('btn-notify').addEventListener('click', testNotif);
-  document.getElementById('btn-notify-m') && document.getElementById('btn-notify-m').addEventListener('click', testNotif);
+  });
 
   document.getElementById('btn-settings').addEventListener('click', openSettings);
-  document.getElementById('btn-settings-m') && document.getElementById('btn-settings-m').addEventListener('click', openSettings);
   document.getElementById('settings-close').addEventListener('click', closeSettings);
   document.getElementById('btn-settings-done').addEventListener('click', closeSettings);
   document.getElementById('settings-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('settings-overlay')) closeSettings();
   });
-
-  // CUADERNO DE RECORDATORIOS
-  document.getElementById('btn-reminders') && document.getElementById('btn-reminders').addEventListener('click', openReminders);
-  document.getElementById('btn-reminders-m') && document.getElementById('btn-reminders-m').addEventListener('click', openReminders);
-  document.getElementById('reminders-close') && document.getElementById('reminders-close').addEventListener('click', closeReminders);
-  document.getElementById('btn-reminders-done') && document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
-  document.getElementById('btn-reminders-add') && document.getElementById('btn-reminders-add').addEventListener('click', showReminderForm);
-  document.getElementById('btn-reminders-cancel') && document.getElementById('btn-reminders-cancel').addEventListener('click', hideReminderForm);
-  document.getElementById('btn-add-reminder') && document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
-  document.getElementById('btn-reminders-clear') && document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
-  document.getElementById('reminders-overlay') && document.getElementById('reminders-overlay').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('reminders-overlay')) closeReminders();
-  });
-  document.getElementById('reminder-book') && document.getElementById('reminder-book').addEventListener('click', (e) => {
-    const doneBtn = e.target.closest('.reminder-done');
-    if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
-    const delBtn = e.target.closest('.reminder-del');
-    if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
-  });
-  document.getElementById('btn-book-next') && document.getElementById('btn-book-next').addEventListener('click', reminderPageNext);
-  document.getElementById('btn-book-prev') && document.getElementById('btn-book-prev').addEventListener('click', reminderPagePrev);
-  document.getElementById('reminder-text') && document.getElementById('reminder-text').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') addReminder();
-  });
-
 
   document.getElementById('toggle-clock').addEventListener('click', () => {
     state.settings.showClock = !state.settings.showClock;

@@ -328,25 +328,32 @@
   </div>
 </div>
 
-<!-- ░░░ LIBRO DE RECORDATORIOS — LA PASTA ATA LOS BORDES DE LA VENTANA ░░░ -->
+<!-- ░░░ LIBRO DE RECORDATORIOS — CUADERNO 8-BITS CON VOLUMEN HORIZONTAL ░░░ -->
 <div class="modal-overlay" id="reminders-overlay" aria-modal="true" role="dialog" aria-labelledby="reminders-title">
   <div class="book-shell">
   <header class="book-bar">
-    <button class="book-top-btn" id="reminders-close" aria-label="Volver">◀ VOLVER</button>
-    <h2 class="book-title" id="reminders-title">📓 LIBRO DE ACTIVIDADES</h2>
-    <button class="book-top-btn add" id="btn-reminders-add" aria-label="Agregar actividad">➕</button>
+    <button class="btn-pixel" id="reminders-close" aria-label="Volver">◀ VOLVER</button>
+    <h2 class="book-title" id="reminders-title">📓 LIBRO DE TAREAS Y PENDIENTES</h2>
+    <button class="btn-pixel" id="btn-reminders-add" aria-label="Agregar actividad">➕ NUEVA TAREA</button>
   </header>
 
+  <!-- CUERPO PRINCIPAL (VOLUMEN HORIZONTAL DE HOJAS APILADAS A IZQ Y DER) -->
   <main class="book-stage" id="reminder-book">
     <div class="book-wrap" id="reminder-book-wrap">
       <div class="book">
+        <!-- MARCAPÁGINAS AZUL EN LA HOJA DERECHA -->
+        <div class="book-bookmark"></div>
+
+        <!-- HOJA IZQUIERDA (PENDIENTES 1 A 5) -->
         <div class="book-page pg-left">
           <div class="book-page-head">
-            <span class="book-page-label">PÁGINA</span>
-            <span class="book-page-num" id="book-page-num-left">1</span>
+            <span class="book-page-label">PÁGINA IZQUIERDA</span>
+            <span class="book-page-num" id="book-page-num-left">PÁG. 1</span>
           </div>
-          <div class="book-page-list" id="reminders-list-left"></div>
+          <div class="book-page-slots" id="reminders-list-left"></div>
         </div>
+
+        <!-- ESPIRAL CENTRAL CON 9 ANILLAS METALIZADAS 8-BIT -->
         <div class="book-gutter">
           <span class="book-spiral"></span>
           <span class="book-spiral"></span>
@@ -354,13 +361,18 @@
           <span class="book-spiral"></span>
           <span class="book-spiral"></span>
           <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
+          <span class="book-spiral"></span>
         </div>
+
+        <!-- HOJA DERECHA (PENDIENTES 6 A 10) -->
         <div class="book-page pg-right">
           <div class="book-page-head">
-            <span class="book-page-label">PÁGINA</span>
-            <span class="book-page-num" id="book-page-num-right">2</span>
+            <span class="book-page-label">PÁGINA DERECHA</span>
+            <span class="book-page-num" id="book-page-num-right">PÁG. 2</span>
           </div>
-          <div class="book-page-list" id="reminders-list-right"></div>
+          <div class="book-page-slots" id="reminders-list-right"></div>
         </div>
       </div>
       <p class="book-empty" id="reminders-empty">Tu libro está vacío 📓<br><span>Pulsa "+" para empezar</span></p>
@@ -368,20 +380,21 @@
     </div>
   </main>
 
+  <!-- BARRA INFERIOR DE PAGINACIÓN -->
   <footer class="book-bottombar">
-    <button class="book-top-btn" id="btn-reminders-clear">LIMPIAR HECHOS</button>
+    <button class="btn-pixel" id="btn-reminders-clear">LIMPIAR HECHOS</button>
     <div class="book-pager">
-      <button class="book-page-btn disabled" id="btn-book-prev" title="Página anterior" aria-label="Página anterior">◀</button>
-      <span class="book-page-count" id="book-page-count">PÁG. 1/1</span>
-      <button class="book-page-btn disabled" id="btn-book-next" title="Página siguiente" aria-label="Página siguiente">▶</button>
+      <button class="btn-pixel disabled" id="btn-book-prev" title="Página anterior" aria-label="Página anterior">◀ ANTERIOR</button>
+      <span class="book-page-count" id="book-page-count">HOJA 1/1</span>
+      <button class="btn-pixel disabled" id="btn-book-next" title="Página siguiente" aria-label="Página siguiente">SIGUIENTE ▶</button>
     </div>
-    <button class="book-top-btn primary" id="btn-reminders-done">LISTO ▶</button>
+    <button class="btn-pixel" id="btn-reminders-done">LISTO ▶</button>
   </footer>
 
-  <!-- FORMULARIO PARA AGREGAR -->
+  <!-- MODAL FORMULARIO AGREGAR (se cubre toda la pasta) -->
   <div class="reminder-form-panel" id="reminder-form-panel">
     <div class="reminder-form">
-      <h3 class="book-title form-title">➕ NUEVA ACTIVIDAD</h3>
+      <h3 class="book-title form-title">➕ AGREGAR TAREA EN SLOT</h3>
       <div class="form-group">
         <label class="pixel-label" for="reminder-text">¿QUÉ TIENES QUE HACER?</label>
         <input class="pixel-input" type="text" id="reminder-text" placeholder="Ej: entrega trabajo de Cálculo" maxlength="120" />
@@ -397,13 +410,13 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="pixel-label" for="reminder-date">FECHA</label>
+          <label class="pixel-label" for="reminder-date">FECHA LÍMITE</label>
           <input class="pixel-input" type="date" id="reminder-date" />
         </div>
       </div>
       <div class="reminder-form-actions">
-        <button class="pixel-btn btn-secondary" id="btn-reminders-cancel">← CANCELAR</button>
-        <button class="pixel-btn btn-primary" id="btn-add-reminder">AGREGAR ▶</button>
+        <button class="btn-pixel" id="btn-reminders-cancel">← CANCELAR</button>
+        <button class="btn-pixel" id="btn-add-reminder">GUARDAR ▶</button>
       </div>
     </div>
   </div>
