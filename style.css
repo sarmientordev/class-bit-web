@@ -1498,6 +1498,40 @@ select.pixel-input { cursor: pointer; }
 }
 .btn-pixel.disabled { opacity: 0.35; pointer-events: none; }
 
+/* ▸ FLECHAS DEL PAGINADOR (voltean la hoja) */
+.btn-page-arrow {
+  flex: 0 0 auto;
+  font-family: var(--font-vt);
+  font-size: 22px;
+  line-height: 1;
+  width: 46px;
+  height: 38px;
+  color: #ffffff;
+  background: #000000;
+  border: 3px solid #ffffff;
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 0 rgba(0,0,0,0.5);
+  transition: all 0.1s steps(2);
+}
+.btn-page-arrow:hover {
+  background: var(--accent-cyan);
+  color: #000000;
+  border-color: #000000;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+.btn-page-arrow.disabled { opacity: 0.35; pointer-events: none; }
+@keyframes arrowNudgeLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3px); }
+}
+@keyframes arrowNudgeRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+#btn-book-prev:hover:not(.disabled) { animation: arrowNudgeLeft 0.5s steps(3) infinite; }
+#btn-book-next:hover:not(.disabled) { animation: arrowNudgeRight 0.5s steps(3) infinite; }
+
 /* ▸ MARCO DEL CUADERNO: VOLUMEN HORIZONTAL (CANTOS DE HOJAS A IZQ Y DER) */
 .book-shell {
   position: relative;
@@ -1788,6 +1822,23 @@ select.pixel-input { cursor: pointer; }
   text-shadow: 0 0 4px var(--accent-cyan);
 }
 
+/* ▸ BOTÓN GRANDE DEL PRIMER SLOT VACÍO (sistema de corrido) */
+.book-page .task-slot .slot-big-add {
+  flex: 1 1 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.book-page .task-slot.empty.is-add-slot:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(84, 56, 38, 0.4);
+  border-bottom: 4px solid #543826;
+  box-shadow: none;
+}
+
 /* ▸ ESTADO VACÍO (cubre el libro) */
 .book-empty { position: absolute; inset: 0; z-index: 8; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(253,248,234,0.94); border: 2px dashed rgba(60,45,15,0.4); font-family: var(--font-pixel); font-size: 8px; color: rgba(60,45,15,0.85); text-align: center; padding: 20px; line-height: 1.9; }
 .book-empty span { color: var(--accent-magenta); font-size: 7px; }
@@ -1876,6 +1927,7 @@ select.pixel-input { cursor: pointer; }
   .book-page .reminder-meta { font-size: 6px; }
   .book-bottombar { gap: 8px; padding: 8px 4px; flex-wrap: wrap; }
   .book-page-count { font-size: 7px; }
+  .btn-page-arrow { width: 38px; height: 32px; font-size: 18px; }
   .book-spiral { width: 10px; height: 10px; }
   .reminder-form-panel { padding: 10px; }
   .reminder-form { padding: 14px; }

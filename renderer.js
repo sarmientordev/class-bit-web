@@ -973,14 +973,14 @@ function reminderSlotFilledHtml(r, idx) {
     </div>`;
 }
 
-function reminderSlotEmptyHtml(idx) {
+function reminderSlotEmptyHtml(idx, isAddSlot) {
+  const inner = isAddSlot
+    ? `<button type="button" class="btn-pixel slot-big-add">➕ NUEVA TAREA</button>`
+    : `<div class="slot-plus-box"><span class="plus-icon">＋</span><span class="plus-text">AGREGAR TAREA</span></div>`;
   return `
-    <div class="task-slot empty btn-open-slot-form" data-slot="${idx}" title="Agregar tarea en el Slot ${idx + 1}">
+    <div class="task-slot empty btn-open-slot-form${isAddSlot ? ' is-add-slot' : ''}" data-slot="${idx}" title="Agregar tarea en el Slot ${idx + 1}">
       <span class="slot-num">${idx + 1}</span>
-      <div class="slot-plus-box">
-        <span class="plus-icon">＋</span>
-        <span class="plus-text">AGREGAR TAREA</span>
-      </div>
+      ${inner}
     </div>`;
 }
 
@@ -999,18 +999,27 @@ function renderReminders(animate) {
   const leftTasks = sorted.slice(spreadStart, spreadStart + REM_PER_PAGE);
   const rightTasks = sorted.slice(spreadStart + REM_PER_PAGE, spreadStart + REM_SPREAD);
 
+  let addSlotIdx = -1;
+  for (let j = 0; j < REM_PER_PAGE; j++) {
+    if (!sorted[spreadStart + j] && addSlotIdx < 0) addSlotIdx = spreadStart + j;
+  }
+  for (let j = 0; j < REM_PER_PAGE; j++) {
+    const g = spreadStart + REM_PER_PAGE + j;
+    if (!sorted[g] && addSlotIdx < 0) addSlotIdx = g;
+  }
+
   let leftHtml = '';
   for (let i = 0; i < REM_PER_PAGE; i++) {
     const globalIdx = spreadStart + i;
     const task = leftTasks[i];
-    leftHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx);
+    leftHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx, globalIdx === addSlotIdx);
   }
 
   let rightHtml = '';
   for (let i = 0; i < REM_PER_PAGE; i++) {
     const globalIdx = spreadStart + REM_PER_PAGE + i;
     const task = rightTasks[i];
-    rightHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx);
+    rightHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx, globalIdx === addSlotIdx);
   }
 
   lList.innerHTML = leftHtml;
@@ -1062,7 +1071,14 @@ function addReminder() {
   textEl.value = '';
   showToast('📓 Recordatorio guardado');
   hideReminderForm();
-  renderReminders();
+  const sortedNow = sortReminders(state.reminders);
+  const totalSpreadsNow = Math.max(1, Math.ceil(sortedNow.length / REM_SPREAD));
+  if ((reminderPage + 1) * REM_SPREAD <= sortedNow.length && reminderPage + 1 < totalSpreadsNow) {
+    reminderPage++;
+    renderReminders('turning-next');
+  } else {
+    renderReminders();
+  }
 }
 
 function toggleReminder(id) {
@@ -1360,7 +1376,6 @@ function bindEvents() {
   document.getElementById('btn-reminders').addEventListener('click', openReminders);
   document.getElementById('reminders-close').addEventListener('click', closeReminders);
   document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
-  document.getElementById('btn-reminders-add').addEventListener('click', showReminderForm);
   document.getElementById('btn-reminders-cancel').addEventListener('click', hideReminderForm);
   document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
   document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
