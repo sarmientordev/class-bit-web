@@ -1000,26 +1000,31 @@ function renderReminders(animate) {
   const rightTasks = sorted.slice(spreadStart + REM_PER_PAGE, spreadStart + REM_SPREAD);
 
   let addSlotIdx = -1;
-  for (let j = 0; j < REM_PER_PAGE; j++) {
-    if (!sorted[spreadStart + j] && addSlotIdx < 0) addSlotIdx = spreadStart + j;
-  }
-  for (let j = 0; j < REM_PER_PAGE; j++) {
-    const g = spreadStart + REM_PER_PAGE + j;
-    if (!sorted[g] && addSlotIdx < 0) addSlotIdx = g;
+  for (let j = 0; j < REM_SPREAD; j++) {
+    const idx = spreadStart + j;
+    if (!sorted[idx]) { addSlotIdx = idx; break; }
   }
 
   let leftHtml = '';
   for (let i = 0; i < REM_PER_PAGE; i++) {
     const globalIdx = spreadStart + i;
     const task = leftTasks[i];
-    leftHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx, globalIdx === addSlotIdx);
+    if (task) {
+      leftHtml += reminderSlotFilledHtml(task, globalIdx);
+    } else if (globalIdx === addSlotIdx) {
+      leftHtml += reminderSlotEmptyHtml(globalIdx, true);
+    }
   }
 
   let rightHtml = '';
   for (let i = 0; i < REM_PER_PAGE; i++) {
     const globalIdx = spreadStart + REM_PER_PAGE + i;
     const task = rightTasks[i];
-    rightHtml += task ? reminderSlotFilledHtml(task, globalIdx) : reminderSlotEmptyHtml(globalIdx, globalIdx === addSlotIdx);
+    if (task) {
+      rightHtml += reminderSlotFilledHtml(task, globalIdx);
+    } else if (globalIdx === addSlotIdx) {
+      rightHtml += reminderSlotEmptyHtml(globalIdx, true);
+    }
   }
 
   lList.innerHTML = leftHtml;
