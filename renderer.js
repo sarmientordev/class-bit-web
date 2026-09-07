@@ -1038,7 +1038,7 @@ function renderReminders(animate) {
   const next = document.getElementById('btn-book-next');
   if (prev) prev.classList.toggle('disabled', reminderPage <= 0);
   if (next) next.classList.toggle('disabled', reminderPage >= totalSpreads - 1);
-  if (empty) empty.style.display = sorted.length ? 'none' : 'block';
+  if (empty) empty.style.display = 'none';
   if (animate && sorted.length) {
     const wrap = document.getElementById('reminder-book-wrap');
     if (wrap) {

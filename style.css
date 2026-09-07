@@ -1839,8 +1839,8 @@ select.pixel-input { cursor: pointer; }
   box-shadow: none;
 }
 
-/* ▸ ESTADO VACÍO (cubre el libro) */
-.book-empty { position: absolute; inset: 0; z-index: 8; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(253,248,234,0.94); border: 2px dashed rgba(60,45,15,0.4); font-family: var(--font-pixel); font-size: 8px; color: rgba(60,45,15,0.85); text-align: center; padding: 20px; line-height: 1.9; }
+/* ▸ ESTADO VACÍO (CUBRE EL LIBRO — NO BLOQUEA: el botón NUEVA TAREA vive en el slot 1) */
+.book-empty { position: absolute; inset: 0; z-index: 3; margin: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(253,248,234,0.5); border: 2px dashed rgba(60,45,15,0.4); font-family: var(--font-pixel); font-size: 8px; color: rgba(60,45,15,0.85); text-align: center; padding: 20px; line-height: 1.9; pointer-events: none; }
 .book-empty span { color: var(--accent-magenta); font-size: 7px; }
 
 /* ▸ HOJA DE ANIMACIÓN (VOLTEO) */
