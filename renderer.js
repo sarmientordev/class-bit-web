@@ -992,7 +992,6 @@ function renderReminders(animate) {
 
   const sorted = sortReminders(state.reminders);
   const totalSpreads = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
-  if (reminderPage >= totalSpreads) reminderPage = totalSpreads - 1;
   if (reminderPage < 0) reminderPage = 0;
 
   const spreadStart = reminderPage * REM_SPREAD;
@@ -1013,6 +1012,8 @@ function renderReminders(animate) {
       leftHtml += reminderSlotFilledHtml(task, globalIdx);
     } else if (globalIdx === addSlotIdx) {
       leftHtml += reminderSlotEmptyHtml(globalIdx, true);
+    } else {
+      leftHtml += reminderSlotEmptyHtml(globalIdx, false);
     }
   }
 
@@ -1024,6 +1025,8 @@ function renderReminders(animate) {
       rightHtml += reminderSlotFilledHtml(task, globalIdx);
     } else if (globalIdx === addSlotIdx) {
       rightHtml += reminderSlotEmptyHtml(globalIdx, true);
+    } else {
+      rightHtml += reminderSlotEmptyHtml(globalIdx, false);
     }
   }
 
@@ -1038,11 +1041,13 @@ function renderReminders(animate) {
   if (pr) pr.textContent = `PÁG. ${pgR}`;
 
   const count = document.getElementById('book-page-count');
-  if (count) count.textContent = `HOJA ${reminderPage + 1}/${totalSpreads}`;
+  const displayTotal = Math.max(totalSpreads, reminderPage + 1);
+  if (count) count.textContent = `HOJA ${reminderPage + 1}/${displayTotal}`;
   const prev = document.getElementById('btn-book-prev');
   const next = document.getElementById('btn-book-next');
+  const canNext = reminderPage < totalSpreads - 1 || addSlotIdx === -1;
   if (prev) prev.classList.toggle('disabled', reminderPage <= 0);
-  if (next) next.classList.toggle('disabled', reminderPage >= totalSpreads - 1);
+  if (next) next.classList.toggle('disabled', !canNext);
   if (empty) empty.style.display = 'none';
   if (animate && sorted.length) {
     const wrap = document.getElementById('reminder-book-wrap');
@@ -1057,8 +1062,13 @@ function renderReminders(animate) {
 
 function reminderPageNext() {
   const sorted = sortReminders(state.reminders);
-  const totalPages = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
-  if (reminderPage < totalPages - 1) { reminderPage++; renderReminders('turning-next'); }
+  const totalSpreads = Math.max(1, Math.ceil(sorted.length / REM_SPREAD));
+  const spreadStart = reminderPage * REM_SPREAD;
+  let pageFull = true;
+  for (let j = 0; j < REM_SPREAD; j++) {
+    if (!sorted[spreadStart + j]) { pageFull = false; break; }
+  }
+  if (reminderPage < totalSpreads - 1 || pageFull) { reminderPage++; renderReminders('turning-next'); }
 }
 
 function reminderPagePrev() {
