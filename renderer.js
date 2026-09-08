@@ -946,10 +946,7 @@ function hideReminderForm() {
 }
 
 function sortReminders(list) {
-  return [...list].sort((a, b) => {
-    const d = (a.date || '9999').localeCompare(b.date || '9999');
-    return d !== 0 ? d : (a.created || 0) - (b.created || 0);
-  });
+  return [...list];
 }
 
 function formatReminderDate(dateStr) {
@@ -976,9 +973,9 @@ function reminderSlotFilledHtml(r, idx) {
 function reminderSlotEmptyHtml(idx, isAddSlot) {
   const inner = isAddSlot
     ? `<button type="button" class="btn-pixel slot-big-add">➕ NUEVA TAREA</button>`
-    : `<div class="slot-plus-box"><span class="plus-icon">＋</span><span class="plus-text">AGREGAR TAREA</span></div>`;
+    : `<span class="slot-hint">agregar tarea</span>`;
   return `
-    <div class="task-slot empty btn-open-slot-form${isAddSlot ? ' is-add-slot' : ''}" data-slot="${idx}" title="Agregar tarea en el Slot ${idx + 1}">
+    <div class="task-slot empty${isAddSlot ? ' is-add-slot' : ''}" data-slot="${idx}" title="Agregar tarea en el Slot ${idx + 1}">
       <span class="slot-num">${idx + 1}</span>
       ${inner}
     </div>`;
@@ -1402,8 +1399,8 @@ function bindEvents() {
     if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
     const delBtn = e.target.closest('.reminder-del');
     if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
-    const emptySlot = e.target.closest('.task-slot.empty');
-    if (emptySlot) { showReminderForm(); return; }
+    const addSlot = e.target.closest('.task-slot.empty.is-add-slot');
+    if (addSlot) { showReminderForm(); return; }
   });
   document.getElementById('btn-book-next').addEventListener('click', reminderPageNext);
   document.getElementById('btn-book-prev').addEventListener('click', reminderPagePrev);
