@@ -1719,7 +1719,7 @@ select.pixel-input { cursor: pointer; }
 }
 .book-page .reminder-del:hover { background: #ff0000; }
 
-/* Slot Vacío transparente (camuflado con la hoja): solo la línea del cuaderno */
+/* Slot Vacío base (transparente para el de agregar; los demás se dibujan abajo) */
 .book-page .task-slot.empty {
   background: transparent;
   border: none;
@@ -1732,17 +1732,22 @@ select.pixel-input { cursor: pointer; }
   box-shadow: none;
 }
 
-/* Texto tenue "agregar tarea" (detalle camuflado con la hoja) */
+/* ▸ RECUADRO DECORATIVO EN SLOTS VACÍOS (solo diseño; NO abren el formulario) */
+.book-page .task-slot.empty:not(.is-add-slot) {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(84, 56, 38, 0.4);
+  border-bottom: 4px solid #543826;
+  cursor: default;
+}
+.book-page .task-slot.empty:not(.is-add-slot):hover {
+  background: rgba(0, 245, 212, 0.18);
+  border: 2px solid #000000;
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+/* Texto tenue "agregar tarea": oculto (el slot es solo el recuadro visual) */
 .book-page .slot-hint {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  font-family: var(--font-pixel);
-  font-size: 7px;
-  color: rgba(84, 56, 38, 0.45);
-  letter-spacing: 2px;
+  display: none;
 }
 
 /* ▸ BOTÓN GRANDE DEL PRIMER SLOT VACÍO (sistema de corrido) */

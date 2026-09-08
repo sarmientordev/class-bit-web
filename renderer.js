@@ -600,7 +600,19 @@ function loadSettings() {
   if (!window.scheduleAPI) return Promise.resolve();
   return window.scheduleAPI.loadSettings().then(s => {
     state.settings = Object.assign({ showClock: true, use24h: false, theme: 'pixel', soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true }, s || {});
-    state.settings.custom = Object.assign(customDefaults(), (state.settings.custom || {}));
+    const savedTheme = state.settings.theme;
+    const def = THEME_DEFAULTS[savedTheme] || THEME_DEFAULTS.pixel;
+    const pxl = customDefaults();
+    const rawCustom = state.settings.custom || {};
+    const cleanCustom = {};
+    Object.keys(rawCustom).forEach(k => {
+      const v = rawCustom[k];
+      if (!v) return;
+      if (v === def[k]) return;
+      if (savedTheme !== 'pixel' && v === pxl[k]) return;
+      cleanCustom[k] = v;
+    });
+    state.settings.custom = cleanCustom;
     applySettingsUI();
   });
 }
