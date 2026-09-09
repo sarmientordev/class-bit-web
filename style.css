@@ -35,6 +35,25 @@
   --arrow-color:  #00f5d4;
   --titlebar-bg:  #0d0618;
 
+  /* Libro de pendientes (universal pixel) */
+  --book-paper:      #eee2c7;
+  --book-paper-edge: #ded1b4;
+  --book-paper-edge2:#cfc1a3;
+  --book-paper-edge3:#c0b192;
+  --book-line:       #543826;
+  --book-line-soft:  rgba(84, 56, 38, 0.30);
+  --book-ink:        #2c1a0e;
+  --book-hint:       rgba(84, 56, 38, 0.85);
+  --book-cover:      #c83646;
+  --book-cover-hi:   #e65565;
+  --book-cover-lo:   #91222f;
+  --book-gutter:     #d8caab;
+  --book-mark:       #4aa2ba;
+  --book-mark-dark:  #2d6b7b;
+  --book-num:        #c83646;
+  --book-card:       #ffffff;
+  --book-card-ink:   #2c1a0e;
+
   --font-pixel: 'Press Start 2P', monospace;
   --font-vt:    'VT323', monospace;
   --px: 2px;
@@ -70,6 +89,24 @@ html[data-theme="dark"] {
   --time-color:   #22e6c8;
   --arrow-color:  #22e6c8;
   --titlebar-bg:  #0b0d10;
+
+  --book-paper:      #14171c;
+  --book-paper-edge: #20252d;
+  --book-paper-edge2:#262c36;
+  --book-paper-edge3:#2d3440;
+  --book-line:       #3a4150;
+  --book-line-soft:  rgba(58, 65, 80, 0.50);
+  --book-ink:        #ecf0f5;
+  --book-hint:       rgba(170, 179, 197, 0.85);
+  --book-cover:      #252a33;
+  --book-cover-hi:   #2f3540;
+  --book-cover-lo:   #1d2128;
+  --book-gutter:     #1d2128;
+  --book-mark:       #22e6c8;
+  --book-mark-dark:  #12807e;
+  --book-num:        #22e6c8;
+  --book-card:       #2f3540;
+  --book-card-ink:   #ecf0f5;
 }
 
 /* ░░ TEMA CLARO ░░ */
@@ -104,6 +141,24 @@ html[data-theme="light"] {
   --time-color:   #0aa893;
   --arrow-color:  #0aa893;
   --titlebar-bg:  #f4f1fa;
+
+  --book-paper:      #fbf9ff;
+  --book-paper-edge: #efeaf7;
+  --book-paper-edge2:#e6def0;
+  --book-paper-edge3:#ddd3e9;
+  --book-line:       #6a4fd0;
+  --book-line-soft:  rgba(106, 79, 208, 0.30);
+  --book-ink:        #33264f;
+  --book-hint:       rgba(59, 46, 120, 0.85);
+  --book-cover:      #6a4fd0;
+  --book-cover-hi:   #9b7ef0;
+  --book-cover-lo:   #4a35a0;
+  --book-gutter:     #e6def0;
+  --book-mark:       #0aa893;
+  --book-mark-dark:  #0a7d6d;
+  --book-num:        #b32a6e;
+  --book-card:       #ffffff;
+  --book-card-ink:   #33264f;
 }
 
 /* ░░ PALETA COMPLETA TEMA OSCURO ░░ */
@@ -283,6 +338,24 @@ html[data-theme="forest"] {
   --time-color:   #00ff88;
   --arrow-color:  #00e5cc;
   --titlebar-bg:  #020c06;
+
+  --book-paper:      #eef5e8;
+  --book-paper-edge: #dce8d2;
+  --book-paper-edge2:#cbdcc0;
+  --book-paper-edge3:#b8d0ac;
+  --book-line:       #2f7d4f;
+  --book-line-soft:  rgba(47, 125, 79, 0.30);
+  --book-ink:        #173a24;
+  --book-hint:       rgba(23, 58, 36, 0.85);
+  --book-cover:      #1d6b3c;
+  --book-cover-hi:   #2f9257;
+  --book-cover-lo:   #134a2a;
+  --book-gutter:     #d6e4c9;
+  --book-mark:       #3fb86b;
+  --book-mark-dark:  #0e5c2f;
+  --book-num:        #1d6b3c;
+  --book-card:       #ffffff;
+  --book-card-ink:   #173a24;
 }
 
 html[data-theme="forest"] .app-header {
@@ -394,6 +467,24 @@ html[data-theme="synthwave"] {
   --time-color:   #ff6b35;
   --arrow-color:  #00d4ff;
   --titlebar-bg:  #050510;
+
+  --book-paper:      #12062a;
+  --book-paper-edge: #1b0d38;
+  --book-paper-edge2:#241347;
+  --book-paper-edge3:#2d1a54;
+  --book-line:       #ff6b35;
+  --book-line-soft:  rgba(255, 107, 53, 0.35);
+  --book-ink:        #ffe9d6;
+  --book-hint:       rgba(255, 107, 53, 0.90);
+  --book-cover:      #ff2d95;
+  --book-cover-hi:   #ff6ba8;
+  --book-cover-lo:   #c9166e;
+  --book-gutter:     #1b0d38;
+  --book-mark:       #00d4ff;
+  --book-mark-dark:  #008cb8;
+  --book-num:        #ff3e96;
+  --book-card:       #241347;
+  --book-card-ink:   #ffe9d6;
 }
 
 html[data-theme="synthwave"] .app-header {
@@ -558,6 +649,24 @@ html[data-theme="spider"] {
   --arrow-color:  #cc0000;
   --titlebar-bg:  #081a30;
   --class-name-color: #cc0000;
+
+  --book-paper:      #e8f0fa;
+  --book-paper-edge: #d3e2f2;
+  --book-paper-edge2:#bcd4ec;
+  --book-paper-edge3:#a4c6e6;
+  --book-line:       #cc0000;
+  --book-line-soft:  rgba(204, 0, 0, 0.30);
+  --book-ink:        #0d2137;
+  --book-hint:       rgba(13, 33, 55, 0.85);
+  --book-cover:      #d50000;
+  --book-cover-hi:   #ff4444;
+  --book-cover-lo:   #a30101;
+  --book-gutter:     #a4c6e6;
+  --book-mark:       #4fc3f7;
+  --book-mark-dark:  #2a5a8c;
+  --book-num:        #cc0000;
+  --book-card:       #ffffff;
+  --book-card-ink:   #0d2137;
 }
 
 /* ── Fondo azul cielo con trama de telaraña (20px como el concepto) ── */
@@ -1477,11 +1586,11 @@ select.pixel-input { cursor: pointer; }
   justify-content: flex-start;
   width: min(940px, 98vw);
   height: min(670px, 88vh);
-  background: #c83646; /* Tapa roja */
+  background: var(--book-cover); /* Tapa */
   border: 8px solid #000000; /* Borde exterior negro */
   box-shadow: 
-    inset -4px -4px 0 0 #91222f,
-    inset 4px 4px 0 0 #e65565,
+    inset -4px -4px 0 0 var(--book-cover-lo),
+    inset 4px 4px 0 0 var(--book-cover-hi),
     14px 18px 0 0 rgba(0, 0, 0, 0.75);
   border-radius: 4px;
   padding: 8px 32px 10px; /* Margen horizontal amplio para los cantos de hojas */
@@ -1494,7 +1603,7 @@ select.pixel-input { cursor: pointer; }
   justify-content: space-between;
   gap: 10px;
   padding: 2px 4px 8px;
-  background: #c83646;
+  background: var(--book-cover);
   position: relative;
   z-index: 10;
 }
@@ -1517,7 +1626,7 @@ select.pixel-input { cursor: pointer; }
   display: flex;
   align-items: stretch;
   justify-content: center;
-  background: #c83646;
+  background: var(--book-cover);
 }
 .book-wrap {
   position: relative;
@@ -1533,21 +1642,21 @@ select.pixel-input { cursor: pointer; }
   grid-template-columns: minmax(0,1fr) 34px minmax(0,1fr);
   height: 100%;
   width: 100%;
-  background: #eee2c7;
+  background: var(--book-paper);
   border: 6px solid #000000;
   position: relative;
   box-shadow:
-    -5px 0 0 0 #ded1b4,
+    -5px 0 0 0 var(--book-paper-edge),
     -8px 0 0 0 #000000,
-    -13px 0 0 0 #cfc1a3,
+    -13px 0 0 0 var(--book-paper-edge2),
     -16px 0 0 0 #000000,
-    -21px 0 0 0 #c0b192,
+    -21px 0 0 0 var(--book-paper-edge3),
     -24px 0 0 0 #000000,
-    5px 0 0 0 #ded1b4,
+    5px 0 0 0 var(--book-paper-edge),
     8px 0 0 0 #000000,
-    13px 0 0 0 #cfc1a3,
+    13px 0 0 0 var(--book-paper-edge2),
     16px 0 0 0 #000000,
-    21px 0 0 0 #c0b192,
+    21px 0 0 0 var(--book-paper-edge3),
     24px 0 0 0 #000000,
     -28px 14px 20px rgba(0, 0, 0, 0.6),
     28px 14px 20px rgba(0, 0, 0, 0.6);
@@ -1560,7 +1669,7 @@ select.pixel-input { cursor: pointer; }
   right: 20%;
   width: 28px;
   height: 42px;
-  background: #4aa2ba;
+  background: var(--book-mark);
   border: 3px solid #000000;
   border-top: none;
   z-index: 20;
@@ -1575,7 +1684,7 @@ select.pixel-input { cursor: pointer; }
   transform: translateX(-50%);
   width: 6px;
   height: 6px;
-  background: #2d6b7b;
+  background: var(--book-mark-dark);
 }
 
 /* ▸ ESPIRAL CENTRAL (LOMO CON 9 ANILLAS METALICAS) */
@@ -1585,7 +1694,7 @@ select.pixel-input { cursor: pointer; }
   align-items: center;
   justify-content: space-evenly;
   padding: 10px 0;
-  background: #d8caab;
+  background: var(--book-gutter);
   border-left: 3px solid #000000;
   border-right: 3px solid #000000;
   position: relative;
@@ -1616,17 +1725,17 @@ select.pixel-input { cursor: pointer; }
   flex-direction: column;
   min-height: 0;
   padding: 10px 14px;
-  background: #eee2c7;
+  background: var(--book-paper);
   overflow: hidden;
   position: relative;
 }
 .book-page.pg-left {
   box-shadow: inset -16px 0 16px -6px rgba(0,0,0,0.15);
-  border-right: 2px dashed rgba(84, 56, 38, 0.3);
+  border-right: 2px dashed var(--book-line-soft);
 }
 .book-page.pg-right {
   box-shadow: inset 16px 0 16px -6px rgba(0,0,0,0.15);
-  border-left: 2px dashed rgba(84, 56, 38, 0.3);
+  border-left: 2px dashed var(--book-line-soft);
 }
 .book-page-head {
   display: flex;
@@ -1634,28 +1743,28 @@ select.pixel-input { cursor: pointer; }
   justify-content: space-between;
   padding-bottom: 6px;
   margin-bottom: 6px;
-  border-bottom: 3px solid #543826;
+  border-bottom: 3px solid var(--book-line);
   font-family: var(--font-pixel);
 }
-.book-page-label { font-size: 7px; letter-spacing: 1px; color: #543826; }
-.book-page-num { font-size: 9px; color: #c83646; font-weight: bold; }
+.book-page-label { font-size: 7px; letter-spacing: 1px; color: var(--book-line); }
+.book-page-num { font-size: 9px; color: var(--book-num); font-weight: bold; }
 .book-page-slots {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 6px;
+  gap: 0;
   flex: 1 1 auto;
   min-height: 0;
 }
 
-/* ▸ RENGLÓN / SLOT HORIZONTAL (LÍNEAS MARRONES OSCURAS) */
+/* ▸ RENGLÓN / FILA (líneas PEGADAS sin separación entre sí; llenan la hoja) */
 .book-page .task-slot {
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 50px;
+  flex: 1 1 0;
+  min-height: 44px;
   padding: 4px 10px;
-  border-bottom: 4px solid #543826;
+  border-bottom: 3px solid var(--book-line);
   position: relative;
   transition: all 0.12s steps(2);
   min-width: 0;
@@ -1664,26 +1773,26 @@ select.pixel-input { cursor: pointer; }
 .book-page .slot-num {
   font-family: var(--font-pixel);
   font-size: 10px;
-  color: #543826;
+  color: var(--book-line);
   flex-shrink: 0;
   min-width: 22px;
   text-align: center;
 }
 
-/* Slot Lleno con datos */
+/* Fila Llena: tarjeta sobre el renglón */
 .book-page .task-slot.filled {
-  background: rgba(255, 255, 255, 0.45);
-  border: 3px solid #000000;
-  border-bottom: 4px solid #000000;
+  background: var(--book-card);
+  border: 2px solid #000000;
+  border-bottom: 3px solid var(--book-line);
   box-shadow: 2px 2px 0 rgba(0,0,0,0.25);
 }
 .book-page .task-slot.filled:hover {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--book-card);
   border-color: var(--accent-magenta);
+  box-shadow: 0 0 10px var(--accent-cyan);
 }
 .book-page .task-slot.filled.is-done {
   opacity: 0.5;
-  background: rgba(200, 190, 170, 0.5);
 }
 
 .book-page .reminder-done {
@@ -1698,13 +1807,24 @@ select.pixel-input { cursor: pointer; }
   box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
   cursor: pointer;
 }
-.book-page .reminder-done.is-done { color: #c83646; }
+.book-page .reminder-done.is-done { color: var(--book-cover); }
 .book-page .reminder-done:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); background: #ffffff; }
 
-.book-page .reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.book-page .reminder-text { font-family: var(--font-vt); font-size: 20px; color: #2c1a0e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1; }
+.book-page .reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.book-page .reminder-text {
+  font-family: var(--font-vt);
+  font-size: 20px;
+  color: var(--book-card-ink);
+  line-height: 1.12;
+  white-space: normal;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .book-page .reminder-text.is-done { text-decoration: line-through; opacity: 0.7; }
-.book-page .reminder-meta { font-family: var(--font-pixel); font-size: 6px; color: rgba(84, 56, 38, 0.85); letter-spacing: 1px; }
+.book-page .reminder-meta { font-family: var(--font-pixel); font-size: 6px; color: var(--book-hint); letter-spacing: 1px; line-height: 1.4; }
 
 .book-page .reminder-del {
   flex: 0 0 auto;
@@ -1713,36 +1833,30 @@ select.pixel-input { cursor: pointer; }
   font-family: var(--font-vt);
   font-size: 13px;
   color: #ffffff;
-  background: #c83646;
+  background: var(--book-cover);
   border: 2px solid #000000;
   cursor: pointer;
 }
-.book-page .reminder-del:hover { background: #ff0000; }
+.book-page .reminder-del:hover { background: var(--book-cover-hi); }
 
-/* Slot Vacío base (transparente para el de agregar; los demás se dibujan abajo) */
+/* Fila Vacía = renglón transparente (la tarjeta del libro está MUERTA: no abre nada) */
 .book-page .task-slot.empty {
   background: transparent;
   border: none;
-  border-bottom: 4px solid #543826;
+  border-bottom: 3px solid var(--book-line);
   cursor: default;
 }
 .book-page .task-slot.empty:hover {
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 3px 0 0 0 var(--accent-cyan);
 }
 
-/* ▸ RECUADRO DECORATIVO EN SLOTS VACÍOS (solo diseño; NO abren el formulario) */
+/* El renglón vacío NO abre el formulario: solo la barra de acento al hover */
 .book-page .task-slot.empty:not(.is-add-slot) {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px dashed rgba(84, 56, 38, 0.4);
-  border-bottom: 4px solid #543826;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid var(--book-line);
   cursor: default;
-}
-.book-page .task-slot.empty:not(.is-add-slot):hover {
-  background: rgba(0, 245, 212, 0.18);
-  border: 2px solid #000000;
-  box-shadow: 0 0 10px var(--accent-cyan);
 }
 
 /* Texto tenue "agregar tarea": oculto (el slot es solo el recuadro visual) */
@@ -1770,11 +1884,11 @@ select.pixel-input { cursor: pointer; }
 }
 
 /* ▸ ESTADO VACÍO (CUBRE EL LIBRO — NO BLOQUEA: el botón NUEVA TAREA vive en el slot 1) */
-.book-empty { position: absolute; inset: 0; z-index: 3; margin: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(253,248,234,0.5); border: 2px dashed rgba(60,45,15,0.4); font-family: var(--font-pixel); font-size: 8px; color: rgba(60,45,15,0.85); text-align: center; padding: 20px; line-height: 1.9; pointer-events: none; }
+.book-empty { position: absolute; inset: 0; z-index: 3; margin: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.05); border: 2px dashed var(--book-line); font-family: var(--font-pixel); font-size: 8px; color: var(--book-ink); text-align: center; padding: 20px; line-height: 1.9; pointer-events: none; }
 .book-empty span { color: var(--accent-magenta); font-size: 7px; }
 
 /* ▸ HOJA DE ANIMACIÓN (VOLTEO) */
-.book-leaf { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; background: #fdf8ea; border: 4px solid #3a2713; }
+.book-leaf { position: absolute; inset: 0; z-index: 5; opacity: 0; pointer-events: none; background: var(--book-paper); border: 4px solid var(--book-line); }
 .book-wrap.turning-next .book-leaf { transform-origin: left center; animation: leafTurnNext 0.6s ease; }
 .book-wrap.turning-prev .book-leaf { transform-origin: right center; animation: leafTurnPrev 0.6s ease; }
 @keyframes leafTurnNext {
@@ -1795,7 +1909,7 @@ select.pixel-input { cursor: pointer; }
 }
 
 /* ▸ BARRA INFERIOR DE PAGINACIÓN (contraportada roja) */
-.book-bottombar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 4px 4px; background: #c83646; position: relative; z-index: 10; }
+.book-bottombar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 4px 4px; background: var(--book-cover); position: relative; z-index: 10; }
 .book-pager { display: flex; align-items: center; gap: 12px; }
 .book-page-count { font-family: var(--font-pixel); font-size: 8px; letter-spacing: 1px; color: #fee440; text-shadow: 2px 2px 0 #000000; }
 
@@ -1814,7 +1928,7 @@ select.pixel-input { cursor: pointer; }
 .reminder-form {
   width: 100%;
   max-width: 440px;
-  background: #c83646;
+  background: var(--book-cover);
   border: 6px solid #000000;
   box-shadow: 8px 12px 0 #000000;
   padding: 18px;
@@ -1846,7 +1960,7 @@ select.pixel-input { cursor: pointer; }
   .book-bar { padding: 8px 8px; gap: 6px; }
   .book-title { font-size: 6px; letter-spacing: 1px; }
   .btn-pixel { font-size: 6px; padding: 6px 7px; }
-  .book-stage { padding: 6px 8px; background: #c83646; }
+  .book-stage { padding: 6px 8px; background: var(--book-cover); }
   .book { grid-template-columns: minmax(0,1fr); grid-template-rows: 1fr 1fr; border-width: 3px; }
   .book-gutter { display: none; }
   .book-bookmark { display: none; }
