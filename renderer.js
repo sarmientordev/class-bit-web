@@ -23,7 +23,8 @@ let state = {
   selectedColor: PALETTE[0],
   editingId: null,
   currentView: 'schedule', // schedule | week | festivos
-  settings: { showClock: true, use24h: false, soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true },
+  editingReminderId: null,
+  settings: { showClock: true, use24h: false, soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true, remindWeek: true, remind3d: true, remind1d: true, remindToday: true },
 };
 
 // ── UTIL ─────────────────────────────────────────
@@ -599,7 +600,7 @@ function loadData() {
 function loadSettings() {
   if (!window.scheduleAPI) return Promise.resolve();
   return window.scheduleAPI.loadSettings().then(s => {
-    state.settings = Object.assign({ showClock: true, use24h: false, theme: 'pixel', soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true }, s || {});
+    state.settings = Object.assign({ showClock: true, use24h: false, theme: 'pixel', soundEnabled: true, soundChoice: 'retro', remind15: true, remind5: true, remindTomorrow: true, remindWeek: true, remind3d: true, remind1d: true, remindToday: true }, s || {});
     const savedTheme = state.settings.theme;
     const def = THEME_DEFAULTS[savedTheme] || THEME_DEFAULTS.pixel;
     const pxl = customDefaults();
@@ -902,6 +903,13 @@ function openSettings() {
     document.getElementById('toggle-remind-tomorrow').setAttribute('aria-checked', state.settings.remindTomorrow !== false);
     document.getElementById('toggle-remind-tomorrow').classList.toggle('on', state.settings.remindTomorrow !== false);
   }
+  [['toggle-remind-week', 'remindWeek'], ['toggle-remind-3d', 'remind3d'], ['toggle-remind-1d', 'remind1d'], ['toggle-remind-today', 'remindToday']].forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.setAttribute('aria-checked', state.settings[key] !== false);
+      el.classList.toggle('on', state.settings[key] !== false);
+    }
+  });
   updateThemePicker();
   document.getElementById('settings-overlay').classList.add('open');
 }
@@ -945,26 +953,73 @@ function closeReminders() {
   document.getElementById('reminders-overlay').classList.remove('open');
 }
 
-function showReminderForm() {
+function showReminderForm(id) {
+  editingReminderId = id || null;
+  const r = id ? state.reminders.find(x => x.id === id) : null;
+  const title = document.querySelector('.reminder-form .form-title');
+  if (title) title.textContent = r ? '✎ EDITAR TAREA' : '➕ AGREGAR TAREA EN SLOT';
+  const tb = document.getElementById('btn-add-reminder');
+  if (tb) tb.textContent = r ? 'GUARDAR CAMBIOS ▶' : 'GUARDAR ▶';
+  if (r) {
+    document.getElementById('reminder-text').value = r.text;
+    document.getElementById('reminder-type').value = r.type || 'tarea';
+    document.getElementById('reminder-date').value = r.date || '';
+  }
   document.getElementById('reminders-overlay').classList.add('is-adding');
   const t = document.getElementById('reminder-text');
   if (t) setTimeout(() => t.focus(), 60);
 }
 
 function hideReminderForm() {
+  editingReminderId = null;
   document.getElementById('reminders-overlay').classList.remove('is-adding');
   const t = document.getElementById('reminder-text');
   if (t) t.value = '';
+  const d = document.getElementById('reminder-date');
+  if (d) d.value = '';
+  const tb = document.getElementById('btn-add-reminder');
+  if (tb) tb.textContent = 'GUARDAR ▶';
+  const tt = document.querySelector('.reminder-form .form-title');
+  if (tt) tt.textContent = '➕ AGREGAR TAREA EN SLOT';
 }
 
 function sortReminders(list) {
   return [...list];
 }
 
+function daysUntilReminder(dateStr) {
+  if (!dateStr) return null;
+  const [y, m, d] = dateStr.split('-').map(Number);
+  if (!y || !m || !d) return null;
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const target = new Date(y, m - 1, d);
+  return Math.round((target - today) / 86400000);
+}
+
 function formatReminderDate(dateStr) {
   if (!dateStr) return 'Sin fecha';
   const [y, m, d] = dateStr.split('-').map(Number);
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+}
+
+function formatReminderFull(dateStr) {
+  if (!dateStr) return 'SIN FECHA';
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+}
+
+function reminderMetaHtml(r) {
+  const fn = formatReminderFull(r.date);
+  if (!r.date) return `<div class="reminder-meta">🗓 SIN FECHA</div>`;
+  const days = daysUntilReminder(r.date);
+  let count = '';
+  let cls = '';
+  if (days < 0) { count = 'VENCIDA'; cls = ' is-overdue'; }
+  else if (days === 0) { count = '¡HOY!'; cls = ' is-due'; }
+  else if (days === 1) { count = 'FALTA 1 DÍA'; cls = ' is-urgent'; }
+  else if (days > 1) { count = `FALTAN ${days} DÍAS`; }
+  return `<div class="reminder-meta${cls}">🗓 ${fn} · ${count}</div>`;
 }
 
 function reminderSlotFilledHtml(r, idx) {
@@ -976,8 +1031,9 @@ function reminderSlotFilledHtml(r, idx) {
       <button class="reminder-done${done}" data-id="${esc(r.id)}" title="${r.done ? 'Marcar pendiente' : 'Marcar hecho'}" aria-label="Marcar">${r.done ? '✓' : '○'}</button>
       <div class="reminder-main">
         <div class="reminder-text${done}">${type} ${esc(r.text)}</div>
-        <div class="reminder-meta">🗓 ${esc(formatReminderDate(r.date))}</div>
+        ${reminderMetaHtml(r)}
       </div>
+      <button class="reminder-edit" data-id="${esc(r.id)}" title="Editar pendiente" aria-label="Editar">✎</button>
       <button class="reminder-del" data-id="${esc(r.id)}" title="Eliminar" aria-label="Eliminar">✕</button>
     </div>`;
 }
@@ -1052,6 +1108,13 @@ function renderReminders(animate) {
   const count = document.getElementById('book-page-count');
   const displayTotal = Math.max(totalSpreads, reminderPage + 1);
   if (count) count.textContent = `HOJA ${reminderPage + 1}/${displayTotal}`;
+
+  const badge = document.getElementById('book-badge');
+  if (badge) {
+    const pending = state.reminders.filter(x => !x.done).length;
+    const doneCount = state.reminders.length - pending;
+    badge.textContent = doneCount > 0 ? `📓 PENDIENTES: ${pending} · ✅ ${doneCount}` : `📓 PENDIENTES: ${pending}`;
+  }
   const prev = document.getElementById('btn-book-prev');
   const next = document.getElementById('btn-book-next');
   const canNext = reminderPage < totalSpreads - 1 || addSlotIdx === -1;
@@ -1090,6 +1153,15 @@ function addReminder() {
   if (!text) { showToast('✏️ Escribe un pendiente'); textEl.focus(); return; }
   const type = document.getElementById('reminder-type').value;
   const date = document.getElementById('reminder-date').value;
+  if (editingReminderId) {
+    const r = state.reminders.find(x => x.id === editingReminderId);
+    if (r) { r.text = text; r.type = type; r.date = date; }
+    persist();
+    showToast('📓 Cambios guardados');
+    hideReminderForm();
+    renderReminders();
+    return;
+  }
   state.reminders.push({ id: uid(), text, type, date, done: false, created: Date.now() });
   persist();
   textEl.value = '';
@@ -1117,10 +1189,10 @@ function deleteReminder(id) {
   renderReminders();
 }
 
-function clearDoneReminders() {
+function clearOverdueReminders() {
   const before = state.reminders.length;
-  state.reminders = state.reminders.filter(x => !x.done);
-  if (state.reminders.length !== before) { persist(); showToast('✓ Pendientes hechos limpios'); }
+  state.reminders = state.reminders.filter(x => x.done || !(x.date && daysUntilReminder(x.date) < 0));
+  if (state.reminders.length !== before) { persist(); showToast('🕸 Pendientes vencidas limpiadas'); }
   renderReminders();
 }
 
@@ -1402,13 +1474,15 @@ function bindEvents() {
   document.getElementById('btn-reminders-done').addEventListener('click', closeReminders);
   document.getElementById('btn-reminders-cancel').addEventListener('click', hideReminderForm);
   document.getElementById('btn-add-reminder').addEventListener('click', addReminder);
-  document.getElementById('btn-reminders-clear').addEventListener('click', clearDoneReminders);
+  document.getElementById('btn-reminders-clear').addEventListener('click', clearOverdueReminders);
   document.getElementById('reminders-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('reminders-overlay')) closeReminders();
   });
   document.getElementById('reminder-book').addEventListener('click', (e) => {
     const doneBtn = e.target.closest('.reminder-done');
     if (doneBtn) { toggleReminder(doneBtn.dataset.id); return; }
+    const editBtn = e.target.closest('.reminder-edit');
+    if (editBtn) { showReminderForm(editBtn.dataset.id); return; }
     const delBtn = e.target.closest('.reminder-del');
     if (delBtn) { deleteReminder(delBtn.dataset.id); return; }
     const addSlot = e.target.closest('.task-slot.empty.is-add-slot');
@@ -1483,6 +1557,21 @@ function bindEvents() {
       openSettings();
     });
   }
+
+  function bindReminderToggle(id, key) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', () => {
+      state.settings[key] = state.settings[key] === false;
+      saveSettings();
+      applySettingsUI();
+      openSettings();
+    });
+  }
+  bindReminderToggle('toggle-remind-week', 'remindWeek');
+  bindReminderToggle('toggle-remind-3d', 'remind3d');
+  bindReminderToggle('toggle-remind-1d', 'remind1d');
+  bindReminderToggle('toggle-remind-today', 'remindToday');
 
   document.getElementById('select-theme').addEventListener('change', (e) => {
     const newTheme = e.target.value;

@@ -1618,6 +1618,19 @@ select.pixel-input { cursor: pointer; }
   color: #fee440;
   text-shadow: 2px 2px 0 #000000;
 }
+.book-badge {
+  flex: 0 0 auto;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: #fee440;
+  background: var(--book-cover-lo);
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  padding: 5px 9px;
+  text-shadow: 1px 1px 0 #000000;
+  white-space: nowrap;
+}
 
 /* ▸ CUERPO DEL CUADERNO CON VOLUMEN HORIZONTAL DE HOJAS APILADAS */
 .book-stage {
@@ -1740,13 +1753,12 @@ select.pixel-input { cursor: pointer; }
 .book-page-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-bottom: 6px;
   margin-bottom: 6px;
   border-bottom: 3px solid var(--book-line);
   font-family: var(--font-pixel);
 }
-.book-page-label { font-size: 7px; letter-spacing: 1px; color: var(--book-line); }
 .book-page-num { font-size: 9px; color: var(--book-num); font-weight: bold; }
 .book-page-slots {
   display: flex;
@@ -1810,12 +1822,14 @@ select.pixel-input { cursor: pointer; }
 .book-page .reminder-done.is-done { color: var(--book-cover); }
 .book-page .reminder-done:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); background: #ffffff; }
 
-.book-page .reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.book-page .reminder-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
 .book-page .reminder-text {
   font-family: var(--font-vt);
-  font-size: 20px;
+  font-size: 23px;
+  text-transform: uppercase;
   color: var(--book-card-ink);
-  line-height: 1.12;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
   white-space: normal;
   word-break: break-word;
   display: -webkit-box;
@@ -1824,7 +1838,33 @@ select.pixel-input { cursor: pointer; }
   overflow: hidden;
 }
 .book-page .reminder-text.is-done { text-decoration: line-through; opacity: 0.7; }
-.book-page .reminder-meta { font-family: var(--font-pixel); font-size: 6px; color: var(--book-hint); letter-spacing: 1px; line-height: 1.4; }
+.book-page .reminder-meta {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--book-hint);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.book-page .reminder-meta.is-urgent { color: #ff7b00; text-shadow: 0 0 6px rgba(255, 123, 0, 0.45); }
+.book-page .reminder-meta.is-due { color: var(--book-cover); text-shadow: 0 0 6px var(--accent-magenta); }
+.book-page .reminder-meta.is-overdue { color: var(--book-hint); text-decoration: line-through; opacity: 0.85; }
+
+.book-page .reminder-edit {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  font-family: var(--font-vt);
+  font-size: 13px;
+  color: var(--book-ink);
+  background: var(--book-gutter);
+  border: 2px solid #000000;
+  cursor: pointer;
+}
+.book-page .reminder-edit:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
 .book-page .reminder-del {
   flex: 0 0 auto;
@@ -1965,8 +2005,10 @@ select.pixel-input { cursor: pointer; }
   .book-gutter { display: none; }
   .book-bookmark { display: none; }
   .book-page { padding: 9px 7px; }
-  .book-page .reminder-text { font-size: 15px; }
-  .book-page .reminder-done, .book-page .reminder-del { width: 22px; height: 22px; }
+  .book-page .reminder-text { font-size: 16px; }
+  .book-page .reminder-done, .book-page .reminder-del, .book-page .reminder-edit { width: 22px; height: 22px; }
+  .book-page .reminder-meta { font-size: 7px; letter-spacing: 1px; }
+  .book-badge { font-size: 6px; padding: 4px 6px; }
   .book-page-num, .book-page-label { font-size: 6px; }
   .book-page .reminder-meta { font-size: 6px; }
   .book-bottombar { gap: 8px; padding: 8px 4px; flex-wrap: wrap; }

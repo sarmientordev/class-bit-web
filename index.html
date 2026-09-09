@@ -2,14 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Class BIT — Horario Universitario</title>
-  <meta name="theme-color" content="#0b1020" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Class BIT" />
-  <link rel="apple-touch-icon" href="assets/icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
@@ -40,12 +34,52 @@
   <header class="app-header">
     <div class="header-top">
       <div class="header-logo">
-        <h1 class="app-title"><span class="brand-class">CLASS</span><span class="title-bit">🕹️</span><span class="brand-bit">BIT</span></h1>
+        <h1 class="app-title">
+          <span class="brand-class">CLASS</span>
+          <span class="title-bit" aria-label="Logo Horario 8-bit">
+            <svg class="pixel-schedule-icon" viewBox="0 0 24 24" shape-rendering="crispEdges" width="28" height="28">
+              <!-- Retro Shadow -->
+              <rect x="2" y="3" width="21" height="20" fill="rgba(0,0,0,0.4)" />
+              <!-- Calendar Base Frame -->
+              <rect x="1" y="2" width="21" height="20" class="logo-frame-border" fill="#1a0a2e" />
+              <rect x="2" y="3" width="19" height="18" class="logo-frame-bg" fill="#0d0618" />
+              <!-- Top Header Bar -->
+              <rect x="2" y="3" width="19" height="4" class="logo-header-bar" fill="#e054a0" />
+              <rect x="3" y="4" width="17" height="1" fill="#ff7bbd" />
+              <!-- Binder Rings -->
+              <rect x="5" y="0" width="2" height="4" class="logo-ring" fill="#00f5d4" />
+              <rect x="11" y="0" width="2" height="4" class="logo-ring" fill="#00f5d4" />
+              <rect x="17" y="0" width="2" height="4" class="logo-ring" fill="#00f5d4" />
+              <rect x="6" y="1" width="1" height="2" fill="#ffffff" />
+              <rect x="12" y="1" width="1" height="2" fill="#ffffff" />
+              <rect x="18" y="1" width="1" height="2" fill="#ffffff" />
+              <!-- Grid Area -->
+              <rect x="3" y="8" width="17" height="12" class="logo-grid-bg" fill="#221040" />
+              <!-- Grid Lines -->
+              <rect x="8" y="8" width="1" height="12" class="logo-grid-line" fill="#4a2870" />
+              <rect x="14" y="8" width="1" height="12" class="logo-grid-line" fill="#4a2870" />
+              <rect x="3" y="12" width="17" height="1" class="logo-grid-line" fill="#4a2870" />
+              <rect x="3" y="16" width="17" height="1" class="logo-grid-line" fill="#4a2870" />
+              <!-- Class Schedule Blocks -->
+              <rect x="4" y="9" width="3" height="2" class="logo-block-1" fill="#00f5d4" />
+              <rect x="4" y="14" width="3" height="4" class="logo-block-2" fill="#fee440" />
+              <rect x="9" y="9" width="4" height="5" class="logo-block-3" fill="#e054a0" />
+              <rect x="9" y="15" width="4" height="4" class="logo-block-4" fill="#9b5de5" />
+              <rect x="15" y="9" width="4" height="3" class="logo-block-5" fill="#00ff88" />
+              <!-- Mini Clock Accent Badge -->
+              <rect x="14" y="14" width="8" height="8" class="logo-clock-border" fill="#0d0618" />
+              <rect x="15" y="15" width="6" height="6" class="logo-clock-bg" fill="#fee440" />
+              <rect x="17" y="16" width="1" height="3" fill="#0d0618" />
+              <rect x="17" y="18" width="3" height="1" fill="#0d0618" />
+              <rect x="16" y="16" width="1" height="1" fill="#e054a0" />
+            </svg>
+          </span>
+          <span class="brand-bit">BIT</span>
+        </h1>
         <span class="app-author">by: Rafxzz</span>
       </div>
       <div class="holiday-banner" id="holiday-banner" style="display:none"></div>
-      <!-- VARIANTE PC: cartel próxima clase (2 filas, como estaba) -->
-      <div class="next-class-header pc-next-class" id="next-class-header">
+      <div class="next-class-header" id="next-class-header">
         <div class="nch-top">
           <span class="nch-label" id="nch-label">PRÓXIMA</span>
           <span class="nch-name" id="nch-name">—</span>
@@ -57,31 +91,10 @@
       </div>
       <div class="header-actions">
         <span class="live-clock" id="live-clock" style="display:none"></span>
-        <!-- VARIANTE PC: 3 botones (como estaba) -->
-        <button class="pixel-btn icon-btn pc-only" id="btn-notify" title="Probar notificación" aria-label="Probar notificación">🔔</button>
-        <button class="pixel-btn icon-btn pc-only" id="btn-settings" title="Ajustes" aria-label="Ajustes">🔧</button>
-        <button class="pixel-btn icon-btn pc-only" id="btn-add" title="Agregar clase" aria-label="Agregar clase"><span>＋</span></button>
-        <button class="pixel-btn icon-btn pc-only" id="btn-reminders" title="Cuaderno de recordatorios" aria-label="Cuaderno de recordatorios">📓</button>
-        <!-- VARIANTE MOBILE: menú ☰ -->
-        <div class="menu-wrap mobile-only" id="menu-wrap">
-          <button class="pixel-btn icon-btn" id="btn-menu" title="Opciones" aria-label="Opciones">☰</button>
-          <div class="action-menu" id="action-menu">
-            <button class="pixel-btn action-item" id="btn-add-m"><span class="action-ico">＋</span>Agregar clase</button>
-            <button class="pixel-btn action-item" id="btn-notify-m"><span class="action-ico">🔔</span>Probar notificación</button>
-            <button class="pixel-btn action-item" id="btn-settings-m"><span class="action-ico">🔧</span>Ajustes</button>
-            <button class="pixel-btn action-item" id="btn-reminders-m"><span class="action-ico">📓</span>Cuaderno</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VARIANTE MOBILE: cartel compacto en fila propia -->
-    <div class="next-class-row mobile-only">
-      <div class="next-class-header-m" id="next-class-header-m">
-        <span class="nch-label" id="nch-label-m">PRÓXIMA</span>
-        <span class="nch-name" id="nch-name-m">—</span>
-        <span class="nch-timer" id="nch-timer-m">--:--:--</span>
-        <span class="nch-room" id="nch-room-m"></span>
+        <button class="pixel-btn icon-btn" id="btn-notify" title="Probar notificación" aria-label="Probar notificación">🔔</button>
+        <button class="pixel-btn icon-btn" id="btn-settings" title="Ajustes" aria-label="Ajustes">🔧</button>
+        <button class="pixel-btn icon-btn" id="btn-add" title="Agregar clase" aria-label="Agregar clase"><span>＋</span></button>
+        <button class="pixel-btn icon-btn" id="btn-reminders" title="Cuaderno de recordatorios" aria-label="Cuaderno de recordatorios">📓</button>
       </div>
     </div>
 
@@ -274,6 +287,26 @@
         </div>
       </div>
       <div class="form-group">
+        <label class="pixel-label">AVISOS DE PENDIENTES (LIBRO)</label>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar faltando 1 semana</span>
+          <button class="toggle-btn" id="toggle-remind-week" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar faltando 3 días</span>
+          <button class="toggle-btn" id="toggle-remind-3d" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar faltando 1 día</span>
+          <button class="toggle-btn" id="toggle-remind-1d" role="switch" aria-checked="false"></button>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-desc">Avisar el MISMO día (vence hoy)</span>
+          <button class="toggle-btn" id="toggle-remind-today" role="switch" aria-checked="false"></button>
+        </div>
+        <p class="settings-note">Los avisos del libro usan el sonido de notificación elegido arriba.</p>
+      </div>
+      <div class="form-group">
         <label class="pixel-label">TEMA</label>
         <select class="pixel-input" id="select-theme">
           <option value="pixel">PIXEL</option>
@@ -334,6 +367,7 @@
   <header class="book-bar">
     <button class="btn-pixel" id="reminders-close" aria-label="Volver">◀ VOLVER</button>
     <h2 class="book-title" id="reminders-title">📓 LIBRO DE TAREAS Y PENDIENTES</h2>
+    <span class="book-badge" id="book-badge">📓 PENDIENTES: 0</span>
   </header>
 
   <!-- CUERPO PRINCIPAL (VOLUMEN HORIZONTAL DE HOJAS APILADAS A IZQ Y DER) -->
@@ -346,7 +380,6 @@
         <!-- HOJA IZQUIERDA (PENDIENTES 1 A 5) -->
         <div class="book-page pg-left">
           <div class="book-page-head">
-            <span class="book-page-label">PÁGINA IZQUIERDA</span>
             <span class="book-page-num" id="book-page-num-left">PÁG. 1</span>
           </div>
           <div class="book-page-slots" id="reminders-list-left"></div>
@@ -368,7 +401,6 @@
         <!-- HOJA DERECHA (PENDIENTES 6 A 10) -->
         <div class="book-page pg-right">
           <div class="book-page-head">
-            <span class="book-page-label">PÁGINA DERECHA</span>
             <span class="book-page-num" id="book-page-num-right">PÁG. 2</span>
           </div>
           <div class="book-page-slots" id="reminders-list-right"></div>
@@ -381,7 +413,7 @@
 
   <!-- BARRA INFERIOR DE PAGINACIÓN -->
   <footer class="book-bottombar">
-    <button class="btn-pixel" id="btn-reminders-clear">LIMPIAR HECHOS</button>
+    <button class="btn-pixel" id="btn-reminders-clear">🧹 LIMPIAR VENCIDAS</button>
     <div class="book-pager">
       <button class="btn-page-arrow disabled" id="btn-book-prev" title="Página anterior (voltear hoja)" aria-label="Página anterior (voltear hoja)">◀</button>
       <span class="book-page-count" id="book-page-count">HOJA 1/1</span>
@@ -425,8 +457,6 @@
 <!-- ░░░ TOAST NOTIFICATION ░░░ -->
 <div class="pixel-toast" id="pixel-toast" role="alert" aria-live="assertive"></div>
 
-<script src="holidays.js"></script>
-<script src="web-shim.js"></script>
 <script src="renderer.js"></script>
 </body>
 </html>
