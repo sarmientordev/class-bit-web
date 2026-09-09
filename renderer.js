@@ -253,7 +253,7 @@ function renderDayTabs() {
 function renderCurrentDate() {
   const now = new Date();
   const opts = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-  const dateStr = now.toLocaleDateString('es-ES', opts).toUpperCase();
+  const dateStr = now.toLocaleDateString('es-ES', opts);
   document.getElementById('current-date-display').textContent = dateStr;
   updateClock();
 

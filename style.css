@@ -1840,14 +1840,13 @@ select.pixel-input { cursor: pointer; }
 .book-page .reminder-text.is-done { text-decoration: line-through; opacity: 0.7; }
 .book-page .reminder-meta {
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 6px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: var(--book-hint);
-  line-height: 1.5;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word;
 }
 .book-page .reminder-meta.is-urgent { color: #ff7b00; text-shadow: 0 0 6px rgba(255, 123, 0, 0.45); }
 .book-page .reminder-meta.is-due { color: var(--book-cover); text-shadow: 0 0 6px var(--accent-magenta); }
@@ -2007,10 +2006,10 @@ select.pixel-input { cursor: pointer; }
   .book-page { padding: 9px 7px; }
   .book-page .reminder-text { font-size: 16px; }
   .book-page .reminder-done, .book-page .reminder-del, .book-page .reminder-edit { width: 22px; height: 22px; }
-  .book-page .reminder-meta { font-size: 7px; letter-spacing: 1px; }
+  .book-page .reminder-meta { font-size: 6px; letter-spacing: 1px; }
   .book-badge { font-size: 6px; padding: 4px 6px; }
   .book-page-num, .book-page-label { font-size: 6px; }
-  .book-page .reminder-meta { font-size: 6px; }
+  .book-page .reminder-meta { font-size: 5px; letter-spacing: 1px; }
   .book-bottombar { gap: 8px; padding: 8px 4px; flex-wrap: wrap; }
   .book-page-count { font-size: 7px; }
   .btn-page-arrow { width: 38px; height: 32px; font-size: 18px; }
