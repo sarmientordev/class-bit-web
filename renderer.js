@@ -699,6 +699,7 @@ const THEME_DEFAULTS = {
   forest:   { text: '#d4ffe8', classname: '#d4ffe8', buttons: '#00cc6a', time: '#00ff88', hover: '#00ff88', lilac: '#00e5cc', arrow: '#00e5cc', titlebar: '#020c06' },
   synthwave:{ text: '#fff0e8', classname: '#fff0e8', buttons: '#ff3e96', time: '#ff6b35', hover: '#ff6b35', lilac: '#ffaa00', arrow: '#00d4ff', titlebar: '#050510' },
   spider:   { text: '#0d2137', classname: '#cc0000', buttons: '#cc0000', time: '#cc0000', hover: '#ff4444', lilac: '#1a3a5c', arrow: '#cc0000', titlebar: '#081a30' },
+  'neon-arcade': { text: '#f2f5f8', classname: '#f2f5f8', buttons: '#b8000e', time: '#ffb800', hover: '#e60012', lilac: '#ffb800', arrow: '#00c2ff', titlebar: '#080a0c' },
   custom:{ text: '#f4d0ff', classname: '#f4d0ff', buttons: '#c0176c', time: '#e054a0', hover: '#e054a0', lilac: '#9b5de5', arrow: '#00f5d4', titlebar: '#0d0618' },
 };
 
@@ -709,6 +710,7 @@ const THEME_NAMES = {
   forest: 'CYBER FOREST',
   synthwave: 'SYNTHWAVE CITY',
   spider: 'SPIDER-VERSE',
+  'neon-arcade': 'NEON ARCADE',
 };
 
 // Convierte HSL → hex (genera las 5 variaciones de cada grupo)
