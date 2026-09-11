@@ -2064,4 +2064,129 @@ html[data-theme="forest"] .app-title .title-bit { filter: drop-shadow(0 0 6px #0
 
 html[data-theme="synthwave"] .logo-header-bar { fill: #ff3e96; }
 html[data-theme="synthwave"] .logo-ring { fill: #00d4ff; }
-html[data-theme="synthwave"] .app-title .title-bit { filter: drop-shadow(0 0 6px #ff6b35); }
+html[data-theme="synthwave"] .app-title .title-bit { filter: drop-shadow(0 0 6px #ff6b35); }
+
+/* ──────────────────────────────────────────────────────────────
+   TEMA NEON ARCADE (nuevo) - cartucho retro NES / salón arcade
+   Negro, rojo NES, amarillo y gris plata
+   ────────────────────────────────────────────────────────────── */
+html[data-theme="neon-arcade"] {
+  --bg-deep:       #0c0f12;
+  --bg-dark:       #14191e;
+  --bg-panel:      #1f262e;
+  --bg-card:       #2a323c;
+  --bg-card-hover: #37424e;
+  --accent-pink:   #e60012;
+  --accent-magenta:#b8000e;
+  --accent-purple: #ffb800;
+  --accent-cyan:   #00c2ff;
+  --accent-yellow: #ffd954;
+  --text-primary:  #f2f5f8;
+  --text-secondary:#aeb7c0;
+  --text-dim:      #66707a;
+  --border-pixel:  #3d4752;
+  --shadow-glow:   rgba(230, 0, 18, 0.35);
+  --shadow-cyan:   rgba(0, 194, 255, 0.25);
+
+  --header-grad-1:#0c0f12;
+  --header-grad-2:#1b222b;
+  --header-grad-3:#262f3a;
+  --overlay-bg:   rgba(8, 10, 12, 0.9);
+  --scanline:     rgba(0, 0, 0, 0.12);
+  --wcell-bg:     rgba(255, 214, 84, 0.07);
+  --wcell-border: rgba(61, 71, 82, 0.5);
+  --chip-text:    #14191e;
+  --toast-border: #ffd954;
+  --status-border:#1f262e;
+  --time-color:   #ffb800;
+  --arrow-color:  #00c2ff;
+  --titlebar-bg:  #080a0c;
+
+  --book-paper:      #f2f2f0;
+  --book-paper-edge: #dededc;
+  --book-paper-edge2:#c9c9c6;
+  --book-paper-edge3:#b4b4b0;
+  --book-line:       #3a3a3a;
+  --book-line-soft:  rgba(58, 58, 58, 0.35);
+  --book-ink:        #1a1a1a;
+  --book-hint:       rgba(26, 26, 26, 0.85);
+  --book-cover:      #e60012;
+  --book-cover-hi:   #ff4a3d;
+  --book-cover-lo:   #99000c;
+  --book-gutter:     #dbdbd8;
+  --book-mark:       #ffd954;
+  --book-mark-dark:  #c49a00;
+  --book-num:        #e60012;
+  --book-card:       #ffffff;
+  --book-card-ink:   #1a1a1a;
+}
+
+html[data-theme="neon-arcade"] .pixel-moon {
+  background: #ffd954;
+  box-shadow:
+    8px  8px 0 0 #e0b800,
+    16px 20px 0 0 #e0b800,
+    4px  28px 0 0 #c49a00,
+    24px 12px 0 0 #c49a00;
+}
+html[data-theme="neon-arcade"] .moon-glow {
+  background: radial-gradient(circle, rgba(255,217,84,0.28) 0%, transparent 70%);
+}
+html[data-theme="neon-arcade"] .cloud-1 {
+  background: #1b222b;
+  box-shadow:
+    16px -16px 0 0 #262f3a,
+    32px -24px 0 0 #262f3a,
+    48px -32px 0 0 #323e4c,
+    64px -24px 0 0 #262f3a,
+    80px -16px 0 0 #262f3a;
+}
+html[data-theme="neon-arcade"] .cloud-2 {
+  background: #262f3a;
+  box-shadow:
+    12px -12px 0 0 #323e4c,
+    24px -20px 0 0 #3f4c5c,
+    36px -16px 0 0 #323e4c,
+    48px -8px  0 0 #262f3a;
+}
+html[data-theme="neon-arcade"] .cloud-3 {
+  background: #b8000e;
+  box-shadow:
+    8px  -8px  0 0 #ffb800,
+    16px -16px 0 0 #ffb800,
+    24px -8px  0 0 #b8000e;
+}
+html[data-theme="neon-arcade"] .star { background: #ffd954; }
+html[data-theme="neon-arcade"] .pixel-icon { filter: drop-shadow(0 0 6px #ffb800); }
+
+html[data-theme="neon-arcade"] .app-header {
+  border-bottom-color: #e60012;
+  box-shadow:
+    0 2px 0 0 #ffb800,
+    0 4px 0 0 rgba(230,0,18,0.25),
+    0 24px 40px rgba(0,0,0,0.45);
+}
+html[data-theme="neon-arcade"] .day-tab.active {
+  background: #e60012;
+  border-color: #ffd954;
+  box-shadow: 0 2px 0 0 #99000c, 0 0 12px rgba(255,184,0,0.5);
+}
+html[data-theme="neon-arcade"] .btn-primary {
+  background: #e60012;
+  border-color: #ffd954;
+  box-shadow: 3px 3px 0 0 #99000c, 0 0 12px rgba(230,0,18,0.4);
+}
+html[data-theme="neon-arcade"] .btn-primary:hover {
+  background: #ff3b2e;
+  box-shadow: 3px 3px 0 0 #99000c, 0 0 20px rgba(255,184,0,0.5);
+}
+html[data-theme="neon-arcade"] .bottom-nav { box-shadow: 0 -4px 20px rgba(230,0,18,0.3); }
+html[data-theme="neon-arcade"] .pixel-toast {
+  box-shadow:
+    3px 3px 0 0 rgba(0,0,0,0.5),
+    0 0 16px rgba(255,217,84,0.4);
+}
+
+html[data-theme="neon-arcade"] .logo-header-bar { fill: #e60012; }
+html[data-theme="neon-arcade"] .logo-ring { fill: #ffd954; }
+html[data-theme="neon-arcade"] .app-title .title-bit { filter: drop-shadow(0 0 6px #ffb800); }
