@@ -1,0 +1,105 @@
+/* ══════════════════════════════════════════════════
+   CLASS BIT — MOBILE / ANDROID (Capacitor)
+   Ajustes táctiles y de pantalla pequeña.
+   No altera la vista de escritorio (> 720px).
+   ══════════════════════════════════════════════════ */
+
+html, body { overscroll-behavior: none; }
+
+/* Shell nativo Android */
+body.native-android .window-bar { display: none; }
+body.native-android .app-wrapper {
+  margin-top: 0;
+  height: 100dvh;
+}
+body.native-android .app-header {
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+}
+body.native-android .main-content {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+body.native-android .bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+body.native-android .pixel-toast {
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Pulido táctil */
+button, .nav-item, .day-tab, .pixel-btn, .icon-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 720px) {
+  .app-wrapper {
+    height: 100dvh;
+    margin-top: 0;
+  }
+  .window-bar { display: none; }
+
+  .app-header { padding: 10px 12px 0; }
+  .header-top { flex-wrap: wrap; gap: 8px; }
+  .header-logo { flex: 1 1 auto; min-width: 0; }
+  .app-author { display: none; }
+  .app-title { font-size: 10px; }
+  .app-title .brand-bit { font-size: 16px; }
+  .header-actions { gap: 6px; }
+  .icon-btn { width: 42px; height: 42px; }
+  .next-class-header {
+    order: 5;
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px 10px;
+  }
+  .nch-name { max-width: 55vw; font-size: 16px; }
+
+  .day-tabs-container { padding: 10px 12px 8px; }
+  .day-tabs {
+    gap: 6px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .day-tab {
+    flex: 0 0 auto;
+    min-width: 48px;
+    min-height: 44px;
+    scroll-snap-align: start;
+  }
+
+  .main-content { padding: 10px 12px calc(96px + env(safe-area-inset-bottom, 0px)); }
+  .week-grid {
+    grid-template-columns: 52px repeat(7, minmax(78px, 1fr));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .status-bar { font-size: 16px; padding: 7px 10px; }
+  .class-count { font-size: 14px; }
+  .now-class-status { display: none !important; }
+
+  .modal-overlay { padding: 8px; }
+  .modal-box { max-height: calc(100dvh - 16px); }
+  .modal-body { padding: 14px; gap: 12px; }
+  .pixel-input, select, input, textarea { font-size: 16px; }
+
+  .book-shell { max-height: calc(100dvh - 16px); }
+  .book-stage { overflow-y: auto; }
+  .book-bottombar { padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)); }
+
+  .pixel-toast {
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 24px);
+    white-space: normal;
+    text-align: center;
+  }
+  .theme-color-palette { max-height: calc(100dvh - 16px); }
+}
+
+@media (max-width: 420px) {
+  .header-actions .icon-btn { width: 40px; height: 40px; }
+  .app-title .brand-bit { font-size: 14px; }
+  .day-tab { min-width: 44px; font-size: 7px; }
+  .nch-name { max-width: 50vw; }
+}

@@ -118,10 +118,18 @@ function getUpcomingHolidays(fromDate, count = 10) {
   return all.slice(0, count).map(h => ({ date: h.date, name: h.name }));
 }
 
-window.Holidays = {
+const HolidaysAPI = {
   easterSunday,
   getHolidaysForYear,
   getHolidayOn,
   getUpcomingHolidays,
 };
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = HolidaysAPI;
+}
+
+if (typeof window !== 'undefined') {
+  window.Holidays = HolidaysAPI;
+}
 
