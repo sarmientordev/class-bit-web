@@ -366,27 +366,6 @@ function renderStats() {
   const topEl = document.getElementById('stats-top');
 }
 
-// ── TRANSICIÓN DE VISTAS (Spider-Sense) ───────────
-function viewTransition(panelId) {
-  const el = document.getElementById(panelId);
-  if (!el) return;
-  el.classList.remove('view-enter');
-  void el.offsetWidth; // reinicia la animación
-  el.classList.add('view-enter');
-  if (document.documentElement.dataset.theme === 'spider') {
-    let fx = document.getElementById('spider-sense-fx');
-    if (!fx) {
-      fx = document.createElement('div');
-      fx.id = 'spider-sense-fx';
-      fx.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(fx);
-    }
-    fx.classList.remove('fire');
-    void fx.offsetWidth;
-    fx.classList.add('fire');
-  }
-}
-
 // ── VIEWS ────────────────────────────────────────
 function showScheduleView() {
   state.currentView = 'schedule';
@@ -396,7 +375,6 @@ function showScheduleView() {
   document.getElementById('schedule-list').style.display = 'flex';
   document.getElementById('empty-state').classList.toggle('show', state.classes.filter(c => c.days.includes(state.selectedDay)).length === 0);
   renderSchedule();
-  viewTransition('schedule-list');
 }
 
 function showWeekView() {
@@ -407,7 +385,6 @@ function showWeekView() {
   document.getElementById('stats-panel').style.display = 'none';
   document.getElementById('week-grid').style.display = 'grid';
   renderWeekGrid();
-  viewTransition('week-grid');
 }
 
 function showFestivosView() {
@@ -418,7 +395,6 @@ function showFestivosView() {
   document.getElementById('stats-panel').style.display = 'none';
   document.getElementById('festivos-panel').style.display = 'block';
   renderFestivos();
-  viewTransition('festivos-panel');
 }
 
 function showStatsView() {
@@ -429,7 +405,6 @@ function showStatsView() {
   document.getElementById('festivos-panel').style.display = 'none';
   document.getElementById('stats-panel').style.display = 'block';
   renderStats();
-  viewTransition('stats-panel');
 }
 
 function setActiveNav(view) {

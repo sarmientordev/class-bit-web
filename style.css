@@ -2192,42 +2192,11 @@ html[data-theme="neon-arcade"] .logo-ring { fill: #ffd954; }
 html[data-theme="neon-arcade"] .app-title .title-bit { filter: drop-shadow(0 0 6px #ffb800); }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ðŸ•· REDISEÃ‘O SPIDER TRACKER â€” animaciones propias del tema
-   (inspirado en la app "Spider Tracker" de Ned Leeds)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ═══════════════════════════════════════════════════════════
+   🕷 SPIDER TRACKER — animaciones (solo tarjetas y estadísticas)
+   ═══════════════════════════════════════════════════════════ */
 
-/* Entrada de vista (todos los temas, sutil) */
-.view-enter { animation: viewEnter 0.28s steps(6) both; }
-@keyframes viewEnter {
-  0%   { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Spider-Sense: destello radial al cambiar de vista */
-#spider-sense-fx {
-  position: fixed; inset: 0; z-index: 300; pointer-events: none; opacity: 0;
-  background:
-    repeating-conic-gradient(from 0deg at 50% 45%, rgba(255,68,68,0.55) 0deg 3deg, transparent 3deg 12deg);
-  -webkit-mask-image: radial-gradient(circle at 50% 45%, transparent 0%, transparent 18%, #000 70%);
-          mask-image: radial-gradient(circle at 50% 45%, transparent 0%, transparent 18%, #000 70%);
-}
-#spider-sense-fx.fire { animation: spiderSense 0.45s steps(5) forwards; }
-@keyframes spiderSense {
-  0%   { opacity: 0;    transform: scale(0.6); }
-  30%  { opacity: 0.9;  transform: scale(1); }
-  100% { opacity: 0;    transform: scale(1.35); }
-}
-
-/* Vista: barrido pixelado con telaraÃ±a en spider */
-html[data-theme="spider"] .view-enter { animation: spiderViewIn 0.4s steps(8) both; }
-@keyframes spiderViewIn {
-  0%   { opacity: 0; transform: translateY(-16px) skewX(-2deg); filter: brightness(1.6); }
-  60%  { opacity: 1; transform: translateY(3px) skewX(0); filter: brightness(1.1); }
-  100% { opacity: 1; transform: translateY(0); filter: none; }
-}
-
-/* Tarjetas: caen como colgadas de un hilo, en cascada */
+/* Tarjetas de clases: caen en cascada al elegir un día */
 html[data-theme="spider"] .class-card {
   animation: webDrop 0.5s steps(8) both;
 }
@@ -2243,67 +2212,12 @@ html[data-theme="spider"] .class-card:nth-child(n+6) { animation-delay: 0.3s; }
   100% { opacity: 1; transform: translateY(0) rotate(0); }
 }
 
-/* Hover: balanceo tipo swing + botÃ³n fÃ­sico al presionar */
-html[data-theme="spider"] .class-card:hover { animation: cardSwing 0.6s steps(6) 1; }
-@keyframes cardSwing {
-  0%, 100% { transform: translate(-2px,-2px) rotate(0); }
-  35%      { transform: translate(-2px,-3px) rotate(0.9deg); }
-  70%      { transform: translate(-2px,-2px) rotate(-0.6deg); }
-}
-html[data-theme="spider"] .class-card:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 0 #0d2137;
-  animation: none;
-}
-
-/* Clase actual: radar ping verde LCD recorriendo la tarjeta */
-html[data-theme="spider"] .class-card.is-current { isolation: isolate; }
-html[data-theme="spider"] .class-card.is-current .card-body::before {
-  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 22px; z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(0,230,118,0.35), transparent);
-  animation: radarSweep 2.6s steps(14) infinite;
-}
-html[data-theme="spider"] .class-card .card-body { position: relative; }
-@keyframes radarSweep {
-  0%   { transform: translateX(-30px); opacity: 0; }
-  15%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translateX(var(--sweep, 520px)); opacity: 0; }
-}
-
-/* Modal: entra como colgado de un hilo de telaraÃ±a */
-html[data-theme="spider"] .modal-box {
-  transform: translateY(-40px) scale(0.96);
-  transition: transform 0.35s steps(7);
-}
-html[data-theme="spider"] .modal-overlay.open .modal-box {
-  animation: webPopIn 0.45s steps(8) both;
-}
-@keyframes webPopIn {
-  0%   { transform: translateY(-60px) scale(0.96); }
-  55%  { transform: translateY(8px) scale(1.01); }
-  80%  { transform: translateY(-3px) scale(1); }
-  100% { transform: translateY(0) scale(1); }
-}
-
-/* NavegaciÃ³n inferior: Ã­tem activo con rebote */
-html[data-theme="spider"] .nav-item.active { animation: navPop 0.3s steps(4); }
-@keyframes navPop {
-  0% { transform: translateY(0); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0); }
-}
-
-/* EstadÃ­sticas: barras que se cargan de izquierda a derecha */
+/* Estadísticas: barras que se cargan de izquierda a derecha */
 html[data-theme="spider"] .stats-day-fill { animation: barLoad 0.7s steps(10) both; transform-origin: left; }
 @keyframes barLoad { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
 
 /* Accesibilidad: respetar reducir movimiento */
 @media (prefers-reduced-motion: reduce) {
-  .view-enter, #spider-sense-fx.fire,
   html[data-theme="spider"] .class-card,
-  html[data-theme="spider"] .class-card:hover,
-  html[data-theme="spider"] .modal-overlay.open .modal-box,
-  html[data-theme="spider"] .nav-item.active,
-  html[data-theme="spider"] .stats-day-fill,
-  html[data-theme="spider"] .class-card.is-current .card-body::before { animation: none !important; }
+  html[data-theme="spider"] .stats-day-fill { animation: none !important; }
 }
