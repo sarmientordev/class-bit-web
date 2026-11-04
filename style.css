@@ -2245,3 +2245,20 @@ html[data-theme="spider"] .pixel-input:focus { box-shadow: none; }
 html[data-theme="spider"] .palette-swatch.selected { box-shadow: 0 0 0 2px #ffd600; }
 html[data-theme="spider"] .color-swatch:hover,
 html[data-theme="spider"] .color-swatch.selected { box-shadow: none; }
+
+/* Sin resplandor (glow) en el inicio: señal/luna roja, logo, título y textos.
+   Se mantienen los colores y las sombras duras pixel */
+html[data-theme="spider"] .moon-glow { display: none; }
+html[data-theme="spider"] .pixel-moon { box-shadow: inset -4px -6px 0 0 rgba(0,0,0,0.25); }
+html[data-theme="spider"] .moon-container::after { filter: none; }
+html[data-theme="spider"] .star { box-shadow: none; }
+html[data-theme="spider"] .app-title { text-shadow: 2px 2px 0 #0a1e38; }
+html[data-theme="spider"] .pixel-icon { filter: none; animation: none; }
+html[data-theme="spider"] .app-title .title-bit { filter: none; animation: none; }
+html[data-theme="spider"] .app-author,
+html[data-theme="spider"] .current-date-bar,
+html[data-theme="spider"] .live-clock,
+html[data-theme="spider"] .status-text,
+html[data-theme="spider"] .nch-timer,
+html[data-theme="spider"] .stat-card .stat-value { text-shadow: none; }
+html[data-theme="spider"] .status-dot { box-shadow: none; }
